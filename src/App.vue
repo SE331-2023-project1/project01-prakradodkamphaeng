@@ -4,12 +4,13 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
   <header>
-    <nav class="flex bg-stone-700 font-serif px-4 py-2 gap-4 text-white items-baseline">
-      <RouterLink :to="{ name: 'home' }" class="text-xl font-bold">Stu<span class="text-amber-400">Connect</span></RouterLink>
-      <RouterLink :to="{ name: 'home' }">Home</RouterLink>
+    <nav class="flex font-sans px-4 py-2 gap-4 text-white items-center">
+      <RouterLink :to="{ name: 'home' }" class="text-2xl font-bold mr-4">STUDENT<span
+          class="text-amber-400">CONNECT</span>
+      </RouterLink>
     </nav>
   </header>
-  <div class="font-serif text-white">
+  <div class="font-serif text-white flex justify-center">
     <RouterView />
   </div>
 </template>
