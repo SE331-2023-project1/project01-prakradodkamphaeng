@@ -60,7 +60,7 @@ watch(() => props.page, (newPage) => {
         <PageDisplay v-if="!pagesDisplay.includes(1)" :page="1" />
         <p v-if="!pagesDisplay.includes(1)">⋯</p>
         <PageDisplay :page="pageDisplay" v-for="pageDisplay in pagesDisplay" :key="pageDisplay"
-          :class="{ 'text-amber-400': page === pageDisplay }" />
+          :class="{ 'text-amber-400': page === pageDisplay, 'pointer-events-none': page === pageDisplay }" />
         <p v-if="!pagesDisplay.includes(maxPage)">⋯</p>
         <PageDisplay v-if="!pagesDisplay.includes(maxPage)" :page="maxPage" />
       </div>
