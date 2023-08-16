@@ -2,10 +2,10 @@ export interface Student {
   id: number
   first_name: string
   last_name: string
-  student_id: string
   image: string
   courses: Array<number>
   comments: Array<string>
+  advisor_id: number
 }
 
 export interface Advisor {
@@ -17,6 +17,6 @@ export interface Advisor {
 
 export interface Course {
   id: number
-  teacher_id: number
+  advisor_id: number
   course_name: string
 }
