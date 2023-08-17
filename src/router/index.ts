@@ -9,6 +9,7 @@ import CourseListView from "@/views/CourseListView.vue";
 import CourseDetail from "@/views/CourseDetail.vue";
 import type {Course} from "@/types";
 import {useCourseStore} from "@/stores/course";
+import registryService from "@/services/RegistryService";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -86,12 +87,18 @@ const router = createRouter({
             name: 'course-detail',
             component: CourseDetail,
             props: true,
-            beforeEnter: (to) => {
+            beforeEnter: async (to) => {
                 const id: number = parseInt(to.params.id as string)
                 const courseStore = useCourseStore()
                 return RegistryService.getCourse(id)
                     .then(res => {
                         courseStore.setCourse(res.data as Course)
+                        const lecturer = res.data.advisor_id
+                        registryService.getAdvisor(lecturer).then(
+                            res2 => {
+                                courseStore.setLecturer(res2.data)
+                            }
+                        ).catch( (e) => { throw e})
                     })
                     .catch(err => {
                         console.log(err)

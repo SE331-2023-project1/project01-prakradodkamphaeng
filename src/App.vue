@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import {RouterLink, RouterView} from 'vue-router'
 </script>
 
 <template>
@@ -8,9 +8,12 @@ import { RouterLink, RouterView } from 'vue-router'
       <RouterLink :to="{ name: 'student-list', query: { page: 1 } }" class="text-2xl font-bold mr-4">STUDENT<span
           class="text-amber-400">CONNECT</span>
       </RouterLink>
+      <RouterLink :to="{ name: 'student-list' , query: {page: 1}}" class="text-1xl  mr-4"> Student</RouterLink>
+      <RouterLink :to="{ name: 'course-list' , query: {page: 1}}" class="text-1xl  mr-4"> Course</RouterLink>
+      <RouterLink :to="{ name: 'course-list' , query: {page: 1}}" class="text-1xl  mr-4"> Advisor</RouterLink>
     </nav>
   </header>
   <div class="font-serif text-white flex justify-center relative">
-    <RouterView />
+    <RouterView/>
   </div>
 </template>
