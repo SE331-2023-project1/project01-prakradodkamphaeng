@@ -54,7 +54,7 @@ watch(() => props.page, (newPage) => {
     </div>
     <div class="flex justify-between w-full  items-center">
       <RouterLink class="p-2 border border-inherit hover:shadow-md hover:bg-stone-600"
-        :to="{ name: 'home', query: { page: props.page - 1 } }" rel="prev" :class="{ 'invisible': props.page <= 1 }">
+        :to="{ name: 'student-list', query: { page: props.page - 1 } }" rel="prev" :class="{ 'invisible': props.page <= 1 }">
         &lt;</RouterLink>
       <div class="flex flex-row gap-4 font-sans items-center select-none">
         <PageDisplay v-if="!pagesDisplay.includes(1)" :page="1" />
@@ -65,7 +65,7 @@ watch(() => props.page, (newPage) => {
         <PageDisplay v-if="!pagesDisplay.includes(maxPage)" :page="maxPage" />
       </div>
       <RouterLink class="p-2 border border-inherit hover:shadow-md hover:bg-stone-600"
-        :to="{ name: 'home', query: { page: props.page + 1 } }" rel="next" :class="{ 'invisible': !hasNextPage }">
+        :to="{ name: 'student-list', query: { page: props.page + 1 } }" rel="next" :class="{ 'invisible': !hasNextPage }">
         &gt;</RouterLink>
     </div>
   </main>
