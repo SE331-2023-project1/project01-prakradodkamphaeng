@@ -11,11 +11,10 @@ defineProps( {
 </script>
 
 <template>
-  <RouterLink :to="{ name: 'course-detail', params: { id: course.id } }"
-              class="relative font-serif bg-zinc-800 shadow-md flex flex-row gap-4 hover:border-l-4 hover:pl-[2px] transition-all border-amber-400 duration-100">
-    <div class="flex flex-col py-2 justify-center">
+  <RouterLink :to="{ name: 'course-detail', params: { id: course.id } }">
+    <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-32 w-full">
       <p class="text-xs opacity-50">#{{ course.id }}</p>
-      <p class="text-xl">{{ `${course.course_name}` }}</p>
+      <p class="mb-2  sm:text-2xl text-1xl font-bold tracking-tight text-gray-900 dark:text-white">{{course.course_name}}</p>
     </div>
   </RouterLink>
 </template>

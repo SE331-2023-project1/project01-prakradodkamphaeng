@@ -1,11 +1,12 @@
 <template>
-    <RouterLink :to="{ name: 'student-courses', params: { id: student.id } }"
-        class="relative font-serif bg-zinc-800 shadow-md flex flex-row gap-4 hover:border-l-4 hover:pl-[2px] transition-all border-amber-400 duration-100">
+    <RouterLink :to="{ name: 'student-courses', params: { id: student.id } }">
+      <div class="relative font-serif bg-zinc-800 shadow-md flex flex-row gap-4 hover:border-l-4 hover:pl-[2px] transition-all border-amber-400 duration-100">
         <img :src="student.image" class="h-16" />
         <div class="flex flex-col py-2 justify-center">
             <p class="text-xs opacity-50">#{{ student.id }}</p>
             <p class="text-xl">{{ `${student.first_name} ${student.last_name}` }}</p>
         </div>
+      </div>
     </RouterLink>
 </template>
 <script setup lang="ts">

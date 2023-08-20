@@ -48,8 +48,8 @@ watch(() => props.page, (newPage) => {
 </script>
 
 <template>
-  <main class="w-1/4 flex flex-col items-center gap-4">
-    <div class="grid gap-4 w-full">
+  <main class="sm:w-1/2 w-full flex flex-col items-center gap-4">
+    <div class="grid gap-4 w-full sm:grid-cols-2 grid-cols-1">
       <StudentCard :student="student" v-for="student in students" :key="student.id"></StudentCard>
     </div>
     <div class="flex justify-between w-full  items-center">
