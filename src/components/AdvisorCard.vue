@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type {PropType} from "vue";
-import type {Advisor} from "@/types";
+import type { Advisor } from '@/types';
 
 defineProps({
   advisor: {

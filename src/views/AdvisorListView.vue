@@ -1,9 +1,9 @@
 <script setup lang="ts">
 
-import CourseCard from "@/components/CourseCard.vue";
+
 import {computed, onMounted, ref, watch} from "vue";
 import RegistryService from "@/services/RegistryService";
-import {Advisor} from "@/types";
+import type {Advisor} from "@/types";
 import {useRouter} from "vue-router";
 import AdvisorCard from "@/components/AdvisorCard.vue";
 
