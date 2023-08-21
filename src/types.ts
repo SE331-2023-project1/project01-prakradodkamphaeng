@@ -20,4 +20,19 @@ export interface Course {
     advisor_id: number
     course_name: string
 }
-
+// {
+//     "id": 4,
+//     "first_name": "Lev",
+//     "last_name": "Hebden",
+//     "image": "https://randomuser.me/api/portraits/women/33.jpg",
+//     "courses": [
+//     10,
+//     9,
+//     13,
+//     6
+// ],
+//     "comments": [
+//     "Outstanding problem-solving skills."
+// ],
+//     "advisor_id": 4
+// },
