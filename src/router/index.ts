@@ -10,10 +10,30 @@ import CourseDetail from "@/views/CourseDetail.vue";
 import type {Course} from "@/types";
 import {useCourseStore} from "@/stores/course";
 import registryService from "@/services/RegistryService";
+import AdvisorListView from "@/views/AdvisorListView.vue";
+import StudentAdvisorView from "@/views/student/StudentAdvisorView.vue";
+import StudentInformationView from "@/views/student/StudentInformationView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
+        {
+            path:'/advisor',
+            name: 'advisor-list',
+            component: AdvisorListView,
+            props: (route) => ({page: parseInt(route.query?.page as string)}),
+            beforeEnter: (to, _, next) => {
+                if (
+                    !to.query?.page ||
+                    parseInt(to.query?.page as string) < 1 ||
+                    isNaN(parseInt(to.query?.page as string))
+                ) {
+                    next({name: 'student-list', query: {page: 1}})
+                } else {
+                    next()
+                }
+            }
+        },
         {
             path: '/',
             name: 'student-list',
@@ -54,6 +74,12 @@ const router = createRouter({
             children: [
                 {
                     path: '',
+                    alias: 'information',
+                    name: 'student-information',
+                    component: StudentInformationView
+                },
+                {
+                    path: 'courses',
                     alias: 'courses',
                     name: 'student-courses',
                     component: StudentCoursesView
@@ -62,6 +88,12 @@ const router = createRouter({
                     path: 'comments',
                     name: 'student-comments',
                     component: StudentCommentView
+                },
+                {
+                    path: 'advisor',
+                    alias: 'advisor',
+                    name: 'student-advisor',
+                    component: StudentAdvisorView
                 }
             ]
         },
