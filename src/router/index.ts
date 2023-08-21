@@ -11,6 +11,8 @@ import type {Course} from "@/types";
 import {useCourseStore} from "@/stores/course";
 import registryService from "@/services/RegistryService";
 import AdvisorListView from "@/views/AdvisorListView.vue";
+import StudentAdvisorView from "@/views/student/StudentAdvisorView.vue";
+import StudentInformationView from "@/views/student/StudentInformationView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -72,6 +74,12 @@ const router = createRouter({
             children: [
                 {
                     path: '',
+                    alias: 'information',
+                    name: 'student-information',
+                    component: StudentInformationView
+                },
+                {
+                    path: 'courses',
                     alias: 'courses',
                     name: 'student-courses',
                     component: StudentCoursesView
@@ -80,6 +88,12 @@ const router = createRouter({
                     path: 'comments',
                     name: 'student-comments',
                     component: StudentCommentView
+                },
+                {
+                    path: 'advisor',
+                    alias: 'advisor',
+                    name: 'student-advisor',
+                    component: StudentAdvisorView
                 }
             ]
         },

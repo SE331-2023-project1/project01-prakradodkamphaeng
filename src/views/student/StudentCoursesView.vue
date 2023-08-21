@@ -1,5 +1,6 @@
 <template>
     <main class="flex flex-col gap-4">
+      <p>Enrolled Course</p>
         <StudentCourseCard v-for="course_tuple of course_tuples" :key="course_tuple[0].id" :course="course_tuple[0]"
             :advisor="course_tuple[1]" />
     </main>

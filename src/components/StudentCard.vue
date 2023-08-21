@@ -1,5 +1,5 @@
 <template>
-    <RouterLink :to="{ name: 'student-courses', params: { id: student.id } }">
+    <RouterLink :to="{ name: 'student-information', params: { id: student.id } }">
       <div class="relative font-serif bg-zinc-800 shadow-md flex flex-row gap-4 hover:border-l-4 hover:pl-[2px] transition-all border-amber-400 duration-100">
         <img :src="student.image" class="h-16" />
         <div class="flex flex-col py-2 justify-center">
