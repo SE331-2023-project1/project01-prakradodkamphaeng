@@ -2,15 +2,29 @@
 import {useStudentStore} from '@/stores/student';
 import {storeToRefs} from 'pinia';
 import {ref} from "vue";
+import RegistryService from "@/services/RegistryService";
 
 
 const {student} = storeToRefs(useStudentStore())
 const comments = student.value?.comments || []
 const comment = ref<string>("")
-const submitHandler = () => {
-  if(comment.value === "" || comment.value.trim().length <= 0) return
-  console.log(comment.value);
+const submitHandler = async () => {
+  if (comment.value === "" || comment.value.trim().length <= 0) return
+  if (!student.value?.id) return;
   comments.unshift(comment.value)
+  const {id, first_name, last_name, image, courses, advisor_id} = student.value
+  const payload = {
+    id,
+    first_name,
+    last_name,
+    image,
+    courses,
+    advisor_id,
+    comments
+  }
+
+  await RegistryService.updateStudent(id, payload)
+
   comment.value = ""
 }
 

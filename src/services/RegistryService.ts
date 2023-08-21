@@ -28,5 +28,14 @@ export default {
   },
   getCourse(id: number): Promise<AxiosResponse<Course>> {
     return apiClient.get<Course>(`/courses/${id}`)
+  },
+  updateStudent(id: number , student: Student ): Promise<AxiosResponse<Student>> {
+    return  apiClient.put<Student>(`/students/${id}`, student )
+  },
+  insertStudent(student: Student ): Promise<AxiosResponse<Student>> {
+    return apiClient.post<Student>(`/students`, student )
+  },
+  insertAdvisor(advisor: Advisor): Promise<AxiosResponse<Advisor>> {
+    return apiClient.post<Advisor>(`/advisors`, advisor)
   }
 }
