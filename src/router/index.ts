@@ -10,10 +10,28 @@ import CourseDetail from "@/views/CourseDetail.vue";
 import type {Course} from "@/types";
 import {useCourseStore} from "@/stores/course";
 import registryService from "@/services/RegistryService";
+import AdvisorListView from "@/views/AdvisorListView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
+        {
+            path:'/advisor',
+            name: 'advisor-list',
+            component: AdvisorListView,
+            props: (route) => ({page: parseInt(route.query?.page as string)}),
+            beforeEnter: (to, _, next) => {
+                if (
+                    !to.query?.page ||
+                    parseInt(to.query?.page as string) < 1 ||
+                    isNaN(parseInt(to.query?.page as string))
+                ) {
+                    next({name: 'student-list', query: {page: 1}})
+                } else {
+                    next()
+                }
+            }
+        },
         {
             path: '/',
             name: 'student-list',

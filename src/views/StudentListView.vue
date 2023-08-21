@@ -15,7 +15,7 @@ const props = defineProps({
   }
 })
 const maxPage = computed(() => {
-  return Math.ceil(students_count.value / 6)
+  return Math.ceil(students_count.value / 10)
 })
 const pagesDisplay = computed(() => {
   return Array.from(
@@ -29,7 +29,7 @@ const hasNextPage = computed(() => {
 })
 
 function changePage(page: number) {
-  RegistryService.getStudents(6, page).then((res) => {
+  RegistryService.getStudents(10, page).then((res) => {
     students.value = res.data
     students_count.value = res.headers['x-total-count']
   }).catch(() => {
