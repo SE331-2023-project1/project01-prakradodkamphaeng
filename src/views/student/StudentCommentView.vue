@@ -1,30 +1,19 @@
 <script setup lang="ts">
 import { useStudentStore } from '@/stores/student';
 import { storeToRefs } from 'pinia';
-import { ref } from "vue";
-import RegistryService from "@/services/RegistryService";
+import { computed, ref } from "vue";
+import { useStudentsStore } from '@/stores/students';
 
 
 const { student } = storeToRefs(useStudentStore())
-const comments = student.value?.comments || []
+const comments = computed(() => {
+  return student.value?.comments.slice().reverse()
+})
 const comment = ref<string>("")
 const submitHandler = async () => {
-  if (comment.value === "" || comment.value.trim().length <= 0) return
+  if (comment.value.trim().length <= 0) return
   if (!student.value?.id) return;
-  comments.unshift(comment.value)
-  const { id, first_name, last_name, image, courses, advisor_id } = student.value
-  const payload = {
-    id,
-    first_name,
-    last_name,
-    image,
-    courses,
-    advisor_id,
-    comments
-  }
-
-  await RegistryService.updateStudent(id, payload)
-
+  useStudentsStore().addComment(student.value.id, comment.value)
   comment.value = ""
 }
 
@@ -41,8 +30,9 @@ const submitHandler = async () => {
 
 
     <div class="flex flex-col">
-      <div v-for="comment of comments" :key="comment" class="px-2 py-4 border-t last-of-type:border-b border-stone-700">
-        {{ comment }}
+      <div v-for="comment of comments" :key="comment"
+        class="px-2 py-4 border-t last-of-type:border-b border-stone-700 flex gap-8">
+        <span class="font-bold">Admin</span> {{ comment }}
       </div>
     </div>
   </main>

@@ -49,8 +49,8 @@ watch(() => props.page, (newPage: number) => {
 </script>
 
 <template>
-  <main class="mx-6 sm:m-0 sm:w-2/3 w-full flex flex-col justify-center items-center gap-4">
-    <div class="flex flex-col items-stretch sm:grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-4 relative">
+  <main class="sm:w-2/3 w-full flex flex-col justify-center items-center gap-4">
+    <div class="flex flex-col items-stretch sm:grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 relative">
       <AdvisorCard :advisor="advisor" v-for="advisor in advisors" :key="advisor.id"></AdvisorCard>
     </div>
     <div class="flex justify-between w-full items-center">

@@ -8,7 +8,7 @@ const lecturer = storeToRefs(store).lecturer
 </script>
 
 <template>
-  <main class="w-4/6 bg-stone-800 p-8" v-if="course && lecturer">
+  <main class="w-full max-w-6xl bg-stone-800 p-4 sm:p-8" v-if="course && lecturer">
     <p class="text-sm opacity-50">#{{ course.id }}</p>
     <p class="text-3xl">{{course.course_name}}</p>
     <hr class="my-4" />

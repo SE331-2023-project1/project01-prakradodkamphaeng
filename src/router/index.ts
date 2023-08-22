@@ -13,6 +13,7 @@ import registryService from '@/services/RegistryService'
 import AdvisorListView from '@/views/AdvisorListView.vue'
 import StudentAdvisorView from '@/views/student/StudentAdvisorView.vue'
 import StudentInformationView from '@/views/student/StudentInformationView.vue'
+import { useStudentsStore } from '@/stores/students'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,7 +29,7 @@ const router = createRouter({
           parseInt(to.query?.page as string) < 1 ||
           isNaN(parseInt(to.query?.page as string))
         ) {
-          next({ name: 'student-list', query: { page: 1 } })
+          next({ name: 'advisor-list', query: { page: 1 } })
         } else {
           next()
         }
@@ -56,20 +57,21 @@ const router = createRouter({
       name: 'student-detail',
       component: StudentDetailView,
       props: true,
-      beforeEnter: (to) => {
+      beforeEnter: async (to) => {
         const id: number = parseInt(to.params.id as string)
         const studentStore = useStudentStore()
-        studentStore.clear()
-        RegistryService.getStudent(id)
-          .then((res) => {
-            studentStore.setStudent(res.data)
+        const studentsStore = useStudentsStore()
+        if (studentsStore.isEmpty) {
+          await studentsStore.FetchStudents().then(() => {
+            studentStore.clear()
+            const student = studentsStore.getStudentById(id)
+            student ? studentStore.setStudent(student) : router.push({ name: 'student-list' })
           })
-          .catch((err) => {
-            console.log(err)
-            if (err.response && err.response.status == 404)
-              return router.push({ name: 'student-list' })
-            else if (err.code === 'ERR_NETWORK') return router.push({ name: 'student-list' })
-          })
+        } else {
+          studentStore.clear()
+          const student = studentsStore.getStudentById(id)
+          student ? studentStore.setStudent(student) : router.push({ name: 'student-list' })
+        }
       },
       children: [
         {
