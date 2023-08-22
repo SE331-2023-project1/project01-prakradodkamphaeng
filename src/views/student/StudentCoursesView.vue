@@ -1,8 +1,10 @@
 <template>
-    <main class="flex flex-col gap-4">
-      <p>Enrolled Course</p>
+    <main class="flex flex-col gap-4" v-if="courses.length">
         <StudentCourseCard v-for="course_tuple of course_tuples" :key="course_tuple[0].id" :course="course_tuple[0]"
             :advisor="course_tuple[1]" />
+    </main>
+    <main class="flex flex-row justify-center" v-else>
+        <img src="/svg/loading.svg" class="w-16">
     </main>
 </template>
 

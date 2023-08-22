@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {storeToRefs} from "pinia";
-import {useStudentStore} from "@/stores/student";
+import { storeToRefs } from "pinia";
+import { useStudentStore } from "@/stores/student";
 
 const store = useStudentStore()
 const advisor = storeToRefs(store).advisor
@@ -9,19 +9,28 @@ const advisor = storeToRefs(store).advisor
 
 <template>
   <main v-if="advisor">
-    <div class="flex flex-col sm:w-1/2 w-full ">
-      <h2 class="text-lg pb-2">Advisor: {{ advisor.first_name }} {{ advisor.last_name }}</h2>
-
-      <img :src="advisor.image" class="w-35 mb-2"/>
-      <div class="flex flex-col">
-        <p class="text-md">Contact Advisor</p>
-        <p class="text-blue-600 cursor-pointer ml-2">Email</p>
-        <p class="text-blue-600 cursor-pointer ml-2">Facebook</p>
+    <!-- TODO: Change to RouterLink -->
+    <div class="flex flex-col lg:flex-row p-4 bg-stone-700 shadow-md gap-4">
+      <img :src="advisor.image" class="w-32 shadow-md" />
+      <div class="flex flex-col justify-between">
+        <div>
+          <p class="opacity-50 text-sm">#{{ advisor.id }}</p>
+          <h2 class="text-3xl">{{ advisor.first_name }} {{ advisor.last_name }}</h2>
+        </div>
+        <div class="flex flex-row">
+          <p class="text-md">Contact Advisor:</p>
+          <div class="flex flex-col">
+            <p class="text-emerald-400 hover:brightness-75 underline cursor-pointer ml-2">Email</p>
+            <p class="text-emerald-400 hover:brightness-75 underline cursor-pointer ml-2">Facebook</p>
+          </div>
+        </div>
       </div>
     </div>
+  </main>
+  <main v-else>
+    <img src="/svg/loading.svg" class="w-16">
   </main>
 </template>
 
 <style scoped>
-
 </style>
