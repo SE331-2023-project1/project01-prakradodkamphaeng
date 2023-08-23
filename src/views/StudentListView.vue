@@ -22,7 +22,6 @@ const maxPage = computed(() => {
 })
 
 const hasNextPage = computed(() => {
-  console.log(props.page.valueOf(), students.value)
   return props.page.valueOf() < maxPage.value
 })
 

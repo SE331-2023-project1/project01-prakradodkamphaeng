@@ -1,5 +1,5 @@
 import RegistryService from '@/services/RegistryService'
-import type { Advisor, Course, Student } from '@/types'
+import type { Student } from '@/types'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
 
@@ -23,7 +23,10 @@ export const useStudentsStore = defineStore('students', {
         })
     },
     addComment(id: number, comment: string) {
-        this.students.find((student) => student.id === id)?.comments.push(comment)
+      this.students.find((student) => student.id === id)?.comments.push(comment)
+    },
+    addStudent(student: Student) {
+      this.students.push(student)
     }
   },
   getters: {

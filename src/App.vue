@@ -65,6 +65,15 @@ function toggleMenuOpen() {
             </svg>
             <span>Course</span>
           </RouterLink>
+          <RouterLink :to="{ name: 'add-person', query: { page: 1 } }"
+            class="min-w-fit flex flex-row gap-2 items-center text-lg font-semibold [&.router-link-active]:bg-emerald-400 hover:brightness-75 w-full hover:text-emerald-400 [&.router-link-active]:text-white px-2 py-1 rounded-md">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
+            </svg>
+            <span>Add Person</span>
+          </RouterLink>
         </div>
       </nav>
       <div class="absolute w-full top-full sm:top-4 sm:w-fit sm:left-full flex justify-center z-20">
@@ -74,11 +83,13 @@ function toggleMenuOpen() {
           <span class="hidden sm:block overflow-hidden max-w-0 transition-all duration-500"
             :class="{ 'group-hover:max-w-[16rem]': !menuOpened }">Menu</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-            class="w-6 h-6 transition-all hidden sm:block group-hover:text-emerald-400" :class="{ 'rotate-180': !menuOpened }">
+            class="w-6 h-6 transition-all hidden sm:block group-hover:text-emerald-400"
+            :class="{ 'rotate-180': !menuOpened }">
             <path stroke-linecap="round" stroke-linejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
           </svg>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-            class="w-6 h-6 transition-all block sm:hidden group-hover:text-emerald-400  " :class="{ 'rotate-180': !menuOpened }">
+            class="w-6 h-6 transition-all block sm:hidden group-hover:text-emerald-400  "
+            :class="{ 'rotate-180': !menuOpened }">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l7.5-7.5 7.5 7.5m-15 6l7.5-7.5 7.5 7.5" />
           </svg>
         </button>
@@ -87,5 +98,4 @@ function toggleMenuOpen() {
     <div class="flex-1 font-serif text-white flex justify-center items-start relative p-4 sm:p-8">
       <RouterView />
     </div>
-  </div>
-</template>
+</div></template>
