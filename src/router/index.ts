@@ -15,6 +15,8 @@ import AddPersonLayoutVue from '@/views/AddPersonLayout.vue'
 import AdvisorDetailView from '@/views/AdvisorDetailView.vue'
 import { useCoursesStore } from '@/stores/courses'
 import { useAdvisorsStore } from '@/stores/advisors'
+import NetworkErrorView from '@/views/NetworkErrorView.vue'
+import NotFoundErrorView from '@/views/NotFoundErrorView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -72,12 +74,12 @@ const router = createRouter({
           await studentsStore.FetchStudents().then(() => {
             studentStore.clear()
             const student = studentsStore.getStudentById(id)
-            student ? studentStore.setStudent(student) : router.push({ name: 'student-list' })
+            student ? studentStore.setStudent(student) : router.push({ name: 'not-found' })
           })
         } else {
           studentStore.clear()
           const student = studentsStore.getStudentById(id)
-          student ? studentStore.setStudent(student) : router.push({ name: 'student-list' })
+          student ? studentStore.setStudent(student) : router.push({ name: 'not-found' })
         }
       },
       children: [
@@ -141,7 +143,7 @@ const router = createRouter({
               const advisor = useAdvisorsStore().getAdvisorById(course.advisor_id)
               advisor ? courseStore.setLecturer(advisor) : null
             } else {
-              router.push({ name: 'student-list' })
+              router.push({ name: 'not-found' })
             }
           })
         } else {
@@ -151,7 +153,7 @@ const router = createRouter({
             const advisor = useAdvisorsStore().getAdvisorById(course.advisor_id)
             advisor ? courseStore.setLecturer(advisor) : null
           } else {
-            router.push({ name: 'student-list' })
+            router.push({ name: 'not-found' })
           }
         }
       }
@@ -160,6 +162,16 @@ const router = createRouter({
       name: 'add-person',
       path: '/add',
       component: AddPersonLayoutVue
+    },
+    {
+      name: 'network-error',
+      path: '/network-error',
+      component: NetworkErrorView
+    },
+    {
+      path: '/:(.*)',
+      name: 'not-found',
+      component: NotFoundErrorView
     }
   ],
   scrollBehavior(to, from, savedPosition) {

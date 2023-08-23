@@ -1,5 +1,6 @@
 import RegistryService from '@/services/RegistryService'
 import type { Advisor } from '@/types'
+import nProgress from 'nprogress'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
 
@@ -13,13 +14,12 @@ export const useAdvisorsStore = defineStore('advisors', {
       return RegistryService.getAdvisors(-1)
         .then((res) => {
           this.advisors = res.data
+          if (nProgress.isStarted()) {
+            nProgress.inc(0.33)
+          }
         })
         .catch((err) => {
-          if (err.response && err.response.status === 404) {
-            router.push({ name: '404-resource', params: { resource: 'course' } })
-          } else {
-            router.push({ name: 'network-error' })
-          }
+          return Promise.reject(err)
         })
     },
     addAdvisor(advisor: Advisor) {

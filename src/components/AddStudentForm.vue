@@ -5,6 +5,7 @@ import { storeToRefs } from "pinia";
 import { computed, ref, toRefs } from "vue";
 import { type Course, type Student } from "@/types";
 import { useCoursesStore } from "@/stores/courses";
+import { useMessageStore } from "@/stores/message";
 const { advisors } = storeToRefs(useAdvisorsStore())
 const coursesStore = useCoursesStore()
 const { courses } = storeToRefs(coursesStore)
@@ -44,6 +45,7 @@ function submitForm() {
     comments: [],
     advisor_id: -1
   }
+  useMessageStore().flashMessage('Added a student successfully.')
 }
 </script>
 

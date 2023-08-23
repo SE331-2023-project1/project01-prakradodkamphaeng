@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import { ref } from 'vue'
+import { useMessageStore } from './stores/message';
+import { storeToRefs } from 'pinia';
 const menuOpened = ref<boolean>(true)
+const { message } = storeToRefs(useMessageStore())
 
 function toggleMenuOpen() {
   menuOpened.value = !menuOpened.value
@@ -95,7 +98,10 @@ function toggleMenuOpen() {
         </button>
       </div>
     </div>
-    <div class="flex-1 font-serif text-white flex justify-center items-start relative p-4 sm:p-8">
+    <div class="flex-1 font-serif text-white flex flex-row justify-center items-start relative p-4 sm:p-8">
+      <div class="absolute top-0 w-full text-center transition-all bg-red-500 opacity-0"
+        :class="{ '-translate-y-full': !message, 'animate-flashMessage': message }">&nbsp;{{ message }}</div>
       <RouterView />
     </div>
-</div></template>
+  </div>
+</template>
