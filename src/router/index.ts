@@ -39,7 +39,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/advisor/:id',
+      path: '/advisor/:id(\\d+)',
       name: 'advisor-detail',
       component: AdvisorDetailView,
       props: true
@@ -62,7 +62,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/student/:id',
+      path: '/student/:id(\\d+)',
       name: 'student-detail',
       component: StudentDetailView,
       props: true,
@@ -74,12 +74,16 @@ const router = createRouter({
           await studentsStore.FetchStudents().then(() => {
             studentStore.clear()
             const student = studentsStore.getStudentById(id)
-            student ? studentStore.setStudent(student) : router.push({ name: 'not-found' })
+            student
+              ? studentStore.setStudent(student)
+              : router.push({ name: '404-resource' })
           })
         } else {
           studentStore.clear()
           const student = studentsStore.getStudentById(id)
-          student ? studentStore.setStudent(student) : router.push({ name: 'not-found' })
+          student
+            ? studentStore.setStudent(student)
+            : router.push({ name: '404-resource' })
         }
       },
       children: [
@@ -126,7 +130,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/course/:id',
+      path: '/course/:id(\\d+)',
       name: 'course-detail',
       component: CourseDetail,
       props: true,
@@ -143,7 +147,7 @@ const router = createRouter({
               const advisor = useAdvisorsStore().getAdvisorById(course.advisor_id)
               advisor ? courseStore.setLecturer(advisor) : null
             } else {
-              router.push({ name: 'not-found' })
+              router.push({ name: '404-resource' })
             }
           })
         } else {
@@ -153,7 +157,7 @@ const router = createRouter({
             const advisor = useAdvisorsStore().getAdvisorById(course.advisor_id)
             advisor ? courseStore.setLecturer(advisor) : null
           } else {
-            router.push({ name: 'not-found' })
+            router.push({ name: '404-resource' })
           }
         }
       }
@@ -169,7 +173,12 @@ const router = createRouter({
       component: NetworkErrorView
     },
     {
-      path: '/:(.*)',
+      path: '/404',
+      name: '404-resource',
+      component: NotFoundErrorView
+    },
+    {
+      path: '/:catchAll(.*)',
       name: 'not-found',
       component: NotFoundErrorView
     }
