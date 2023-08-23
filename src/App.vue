@@ -16,7 +16,7 @@ function toggleMenuOpen() {
   <div class="flex flex-col sm:flex-row sm:min-h-screen">
     <div class="flex flex-col sm:flex-row sticky top-0 z-10 max-h-screen">
       <nav
-        class="flex flex-col font-sans gap-2 text-white items-center bg-stone-800 p-4 overflow-hidden transition-all duration-300 shadow-xl"
+        class="z-50 flex flex-col font-sans gap-2 text-white items-center bg-stone-800 p-4 overflow-hidden transition-all duration-300 shadow-xl"
         :class="{ 'sm:max-w-0 sm:px-0 sm:max-h-fit sm:py-4 max-h-0 py-0': !menuOpened, 'sm:max-w-screen-sm max-h-[720px] sm:max-h-full': menuOpened }">
         <RouterLink :to="{ name: 'student-list', query: { page: 1 } }" class="min-w-fit text-2xl font-bold">STUDENT<span
             class="bg-clip-text bg-gradient-to-r from-lime-400 via-emerald-400 to-sky-400 text-transparent">CONNECT</span>
@@ -99,7 +99,7 @@ function toggleMenuOpen() {
       </div>
     </div>
     <div class="flex-1 font-serif text-white flex flex-row justify-center items-start relative p-4 sm:p-8">
-      <div class="absolute top-0 w-full text-center transition-all bg-red-500 opacity-0"
+      <div class="absolute top-0 w-full text-center transition-all bg-red-500 opacity-0 z-30 shadow-lg"
         :class="{ '-translate-y-full': !message, 'animate-flashMessage': message }">&nbsp;{{ message }}</div>
       <RouterView />
     </div>
