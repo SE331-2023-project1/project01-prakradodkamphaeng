@@ -11,6 +11,7 @@ import {RouterLink, RouterView} from 'vue-router'
       <RouterLink :to="{ name: 'student-list' , query: {page: 1}}" class="text-1xl  mr-4"> Student</RouterLink>
       <RouterLink :to="{ name: 'advisor-list' , query: {page: 1}}" class="text-1xl  mr-4"> Advisor</RouterLink>
       <RouterLink :to="{ name: 'course-list' , query: {page: 1}}" class="text-1xl  mr-4"> Course</RouterLink>
+      <RouterLink :to="{ name: 'add-person'} " class="text-1xl  mr-4"> Add person</RouterLink>
     </nav>
   </header>
   <div class="font-serif text-white flex justify-center relative">

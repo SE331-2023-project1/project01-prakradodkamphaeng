@@ -13,6 +13,7 @@ import registryService from "@/services/RegistryService";
 import AdvisorListView from "@/views/AdvisorListView.vue";
 import StudentAdvisorView from "@/views/student/StudentAdvisorView.vue";
 import StudentInformationView from "@/views/student/StudentInformationView.vue";
+import AddPersonLayout from "@/views/AddPersonLayout.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -141,6 +142,11 @@ const router = createRouter({
                         }
                     })
             }
+        },
+        {
+            path: '/add',
+            name: 'add-person',
+            component: AddPersonLayout
         }
 
     ]
