@@ -23,6 +23,7 @@ export const useAdvisorsStore = defineStore('advisors', {
         })
     },
     addAdvisor(advisor: Advisor) {
+      advisor.id = this.advisors[this.advisors.length - 1].id + 1
       this.advisors.push(advisor)
     }
   },

@@ -26,6 +26,7 @@ export const useStudentsStore = defineStore('students', {
       this.students.find((student) => student.id === id)?.comments.push(comment)
     },
     addStudent(student: Student) {
+      student.id = this.students[this.students.length - 1].id + 1
       this.students.push(student)
     }
   },

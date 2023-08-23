@@ -16,7 +16,7 @@ function toggleMenuOpen() {
         class="flex flex-col font-sans gap-2 text-white items-center bg-stone-800 p-4 overflow-hidden transition-all duration-300 shadow-xl"
         :class="{ 'sm:max-w-0 sm:px-0 sm:max-h-fit sm:py-4 max-h-0 py-0': !menuOpened, 'sm:max-w-screen-sm max-h-[720px] sm:max-h-full': menuOpened }">
         <RouterLink :to="{ name: 'student-list', query: { page: 1 } }" class="min-w-fit text-2xl font-bold">STUDENT<span
-            class="text-emerald-400">CONNECT</span>
+            class="bg-clip-text bg-gradient-to-r from-lime-400 via-emerald-400 to-sky-400 text-transparent">CONNECT</span>
         </RouterLink>
         <div class="flex flex-col w-full items-end">
           <RouterLink :to="{ name: 'student-list', query: { page: 1 } }"
@@ -78,7 +78,7 @@ function toggleMenuOpen() {
       </nav>
       <div class="absolute w-full top-full sm:top-4 sm:w-fit sm:left-full flex justify-center z-20">
         <button
-          class="p-2 sm:mb-0 w-16 h-fit sm:h-16 sm:w-fit flex justify-center items-center shadow-xl overflow-hidden text-white bg-stone-800 rounded-bl-xl rounded-br-xl sm:rounded-bl-none sm:rounded-tr-xl transition-all group"
+          class="p-1 sm:mb-0 w-16 h-fit sm:h-16 sm:w-fit flex justify-center items-center shadow-xl overflow-hidden text-white bg-stone-800 rounded-bl-2xl rounded-br-2xl sm:rounded-bl-none sm:rounded-tr-2xl transition-all group"
           @click="toggleMenuOpen">
           <span class="hidden sm:block overflow-hidden max-w-0 transition-all duration-500"
             :class="{ 'group-hover:max-w-[16rem]': !menuOpened }">Menu</span>
