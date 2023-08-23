@@ -4,51 +4,35 @@ import RegistryService from "@/services/RegistryService";
 import type { Course } from "@/types";
 import { useRouter } from "vue-router";
 import CourseCard from "@/components/CourseCard.vue";
+import { useCoursesStore } from "@/stores/courses";
+import { storeToRefs } from "pinia";
 
-const courseCount = ref<number>(0);
-const courses = ref<Course[]>([])
-const router = useRouter()
+
+const { courses } = storeToRefs(useCoursesStore())
 const props = defineProps({
   page: {
     type: Number,
     required: true
   }
 })
-
-const maxPage = computed(() => {
-  return Math.ceil(courseCount.value / 6);
+const courses_count = computed(() => courses.value.length)
+const courses_slice = computed(() => {
+  return courses.value.slice(4 * (props.page - 1), 4 * (props.page - 1) + 4)
 })
-
+const maxPage = computed(() => {
+  return Math.ceil(courses_count.value / 4)
+})
 
 const hasNextPage = computed(() => {
   return props.page.valueOf() < maxPage.value
 })
 
-const changePage = (page: number) => {
-  RegistryService.getCourses(6, page)
-    .then(res => {
-      courses.value = res.data
-      courseCount.value = res.headers['x-total-count']
-    })
-    .catch(() => {
-      router.push({ name: 'NetworkError' })
-    }
-    )
-}
-
-onMounted(() => {
-  changePage(props.page)
-})
-
-watch(() => props.page, (newPage: number) => {
-  changePage(newPage)
-})
 </script>
 
 <template>
   <main class="w-full max-w-6xl flex flex-col items-center gap-4">
     <div class="flex flex-col gap-4">
-      <CourseCard :course="course" v-for="course in courses" :key="course.id" />
+      <CourseCard :course="course" v-for="course in courses_slice" :key="course.id" />
     </div>
     <div class="flex justify-between w-full items-center">
       <RouterLink
