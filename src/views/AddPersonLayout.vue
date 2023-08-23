@@ -1,13 +1,10 @@
 <script setup lang="ts">
 
-import {computed, ref} from "vue";
-import AddStudentForm from "@/components/AddStudentForm.vue";
 import AddAdvisorForm from "@/components/AddAdvisorForm.vue";
+import AddStudentForm from "@/components/AddStudentForm.vue";
+import { ref } from "vue";
 
 const isStudentView = ref<Boolean>(true)
-const toggleText = computed(() => {
-  return isStudentView.value ? "Add Student" : "Add Advisor"
-})
 
 </script>
 

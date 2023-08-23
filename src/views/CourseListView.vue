@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
-import RegistryService from "@/services/RegistryService";
-import type { Course } from "@/types";
-import { useRouter } from "vue-router";
+import { computed } from "vue";
 import CourseCard from "@/components/CourseCard.vue";
 import { useCoursesStore } from "@/stores/courses";
 import { storeToRefs } from "pinia";

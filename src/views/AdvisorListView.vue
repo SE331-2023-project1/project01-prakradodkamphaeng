@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
-import RegistryService from "@/services/RegistryService";
-import type { Advisor } from "@/types";
-import { useRouter } from "vue-router";
+import { computed } from "vue";
 import AdvisorCard from "@/components/AdvisorCard.vue";
 import { useAdvisorsStore } from "@/stores/advisors";
 import { storeToRefs } from "pinia";

@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import StudentCard from '@/components/StudentCard.vue';
-import RegistryService from '@/services/RegistryService';
-import type { Student } from '@/types';
-import { computed, onMounted, ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed } from 'vue';
 import { useStudentsStore } from '@/stores/students';
 import { storeToRefs } from 'pinia';
 const { students } = storeToRefs(useStudentsStore())

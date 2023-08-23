@@ -2,9 +2,7 @@ import RegistryService from '@/services/RegistryService'
 import type { Student } from '@/types'
 import nProgress from 'nprogress'
 import { defineStore } from 'pinia'
-import { useRouter } from 'vue-router'
 
-const router = useRouter()
 export const useStudentsStore = defineStore('students', {
   state: () => ({
     students: [] as Student[]

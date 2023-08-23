@@ -1,9 +1,7 @@
-import RegistryService from '@/services/RegistryService'
 import type { Advisor, Course, Student } from '@/types'
 import { defineStore } from 'pinia'
-import { useRouter } from 'vue-router'
-import { useCoursesStore } from './courses'
 import { useAdvisorsStore } from './advisors'
+import { useCoursesStore } from './courses'
 
 export const useStudentStore = defineStore('student', {
   state: () => ({
