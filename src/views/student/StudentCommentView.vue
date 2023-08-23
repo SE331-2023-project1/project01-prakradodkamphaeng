@@ -3,6 +3,7 @@ import { useStudentStore } from '@/stores/student';
 import { storeToRefs } from 'pinia';
 import { computed, ref } from "vue";
 import { useStudentsStore } from '@/stores/students';
+import { useMessageStore } from '@/stores/message';
 
 
 const { student } = storeToRefs(useStudentStore())
@@ -15,6 +16,7 @@ const submitHandler = async () => {
   if (!student.value?.id) return;
   useStudentsStore().addComment(student.value.id, comment.value)
   comment.value = ""
+  useMessageStore().flashMessage("Added a comment successfully.")
 }
 
 </script>

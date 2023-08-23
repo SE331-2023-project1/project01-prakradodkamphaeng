@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import { ref } from 'vue'
+import { useMessageStore } from './stores/message';
+import { storeToRefs } from 'pinia';
 const menuOpened = ref<boolean>(true)
+const { message } = storeToRefs(useMessageStore())
 
 function toggleMenuOpen() {
   menuOpened.value = !menuOpened.value
@@ -16,7 +19,7 @@ function toggleMenuOpen() {
         class="flex flex-col font-sans gap-2 text-white items-center bg-stone-800 p-4 overflow-hidden transition-all duration-300 shadow-xl"
         :class="{ 'sm:max-w-0 sm:px-0 sm:max-h-fit sm:py-4 max-h-0 py-0': !menuOpened, 'sm:max-w-screen-sm max-h-[720px] sm:max-h-full': menuOpened }">
         <RouterLink :to="{ name: 'student-list', query: { page: 1 } }" class="min-w-fit text-2xl font-bold">STUDENT<span
-            class="text-emerald-400">CONNECT</span>
+            class="bg-clip-text bg-gradient-to-r from-lime-400 via-emerald-400 to-sky-400 text-transparent">CONNECT</span>
         </RouterLink>
         <div class="flex flex-col w-full items-end">
           <RouterLink :to="{ name: 'student-list', query: { page: 1 } }"
@@ -65,26 +68,39 @@ function toggleMenuOpen() {
             </svg>
             <span>Course</span>
           </RouterLink>
+          <RouterLink :to="{ name: 'add-person', query: { page: 1 } }"
+            class="min-w-fit flex flex-row gap-2 items-center text-lg font-semibold [&.router-link-active]:bg-emerald-400 hover:brightness-75 w-full hover:text-emerald-400 [&.router-link-active]:text-white px-2 py-1 rounded-md">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
+            </svg>
+            <span>Add Person</span>
+          </RouterLink>
         </div>
       </nav>
       <div class="absolute w-full top-full sm:top-4 sm:w-fit sm:left-full flex justify-center z-20">
         <button
-          class="p-2 sm:mb-0 w-16 h-fit sm:h-16 sm:w-fit flex justify-center items-center shadow-xl overflow-hidden text-white bg-stone-800 rounded-bl-xl rounded-br-xl sm:rounded-bl-none sm:rounded-tr-xl transition-all group"
+          class="p-1 sm:mb-0 w-16 h-fit sm:h-16 sm:w-fit flex justify-center items-center shadow-xl overflow-hidden text-white bg-stone-800 rounded-bl-2xl rounded-br-2xl sm:rounded-bl-none sm:rounded-tr-2xl transition-all group"
           @click="toggleMenuOpen">
           <span class="hidden sm:block overflow-hidden max-w-0 transition-all duration-500"
             :class="{ 'group-hover:max-w-[16rem]': !menuOpened }">Menu</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-            class="w-6 h-6 transition-all hidden sm:block group-hover:text-emerald-400" :class="{ 'rotate-180': !menuOpened }">
+            class="w-6 h-6 transition-all hidden sm:block group-hover:text-emerald-400"
+            :class="{ 'rotate-180': !menuOpened }">
             <path stroke-linecap="round" stroke-linejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
           </svg>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-            class="w-6 h-6 transition-all block sm:hidden group-hover:text-emerald-400  " :class="{ 'rotate-180': !menuOpened }">
+            class="w-6 h-6 transition-all block sm:hidden group-hover:text-emerald-400  "
+            :class="{ 'rotate-180': !menuOpened }">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l7.5-7.5 7.5 7.5m-15 6l7.5-7.5 7.5 7.5" />
           </svg>
         </button>
       </div>
     </div>
-    <div class="flex-1 font-serif text-white flex justify-center items-start relative p-4 sm:p-8">
+    <div class="flex-1 font-serif text-white flex flex-row justify-center items-start relative p-4 sm:p-8">
+      <div class="absolute top-0 w-full text-center transition-all bg-red-500 opacity-0"
+        :class="{ '-translate-y-full': !message, 'animate-flashMessage': message }">&nbsp;{{ message }}</div>
       <RouterView />
     </div>
   </div>

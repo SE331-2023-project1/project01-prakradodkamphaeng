@@ -4,16 +4,19 @@ import StudentDetailView from '@/views/StudentDetailView.vue'
 import StudentCoursesView from '@/views/student/StudentCoursesView.vue'
 import StudentCommentView from '@/views/student/StudentCommentView.vue'
 import { useStudentStore } from '@/stores/student'
-import RegistryService from '@/services/RegistryService'
 import CourseListView from '@/views/CourseListView.vue'
 import CourseDetail from '@/views/CourseDetail.vue'
-import type { Course } from '@/types'
 import { useCourseStore } from '@/stores/course'
-import registryService from '@/services/RegistryService'
 import AdvisorListView from '@/views/AdvisorListView.vue'
 import StudentAdvisorView from '@/views/student/StudentAdvisorView.vue'
 import StudentInformationView from '@/views/student/StudentInformationView.vue'
 import { useStudentsStore } from '@/stores/students'
+import AddPersonLayoutVue from '@/views/AddPersonLayout.vue'
+import AdvisorDetailView from '@/views/AdvisorDetailView.vue'
+import { useCoursesStore } from '@/stores/courses'
+import { useAdvisorsStore } from '@/stores/advisors'
+import NetworkErrorView from '@/views/NetworkErrorView.vue'
+import NotFoundErrorView from '@/views/NotFoundErrorView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +37,12 @@ const router = createRouter({
           next()
         }
       }
+    },
+    {
+      path: '/advisor/:id',
+      name: 'advisor-detail',
+      component: AdvisorDetailView,
+      props: true
     },
     {
       path: '/',
@@ -65,12 +74,12 @@ const router = createRouter({
           await studentsStore.FetchStudents().then(() => {
             studentStore.clear()
             const student = studentsStore.getStudentById(id)
-            student ? studentStore.setStudent(student) : router.push({ name: 'student-list' })
+            student ? studentStore.setStudent(student) : router.push({ name: 'not-found' })
           })
         } else {
           studentStore.clear()
           const student = studentsStore.getStudentById(id)
-          student ? studentStore.setStudent(student) : router.push({ name: 'student-list' })
+          student ? studentStore.setStudent(student) : router.push({ name: 'not-found' })
         }
       },
       children: [
@@ -124,28 +133,45 @@ const router = createRouter({
       beforeEnter: async (to) => {
         const id: number = parseInt(to.params.id as string)
         const courseStore = useCourseStore()
-        return RegistryService.getCourse(id)
-          .then((res) => {
-            courseStore.setCourse(res.data as Course)
-            const lecturer = res.data.advisor_id
-            registryService
-              .getAdvisor(lecturer)
-              .then((res2) => {
-                courseStore.setLecturer(res2.data)
-              })
-              .catch((e) => {
-                throw e
-              })
-          })
-          .catch((err) => {
-            console.log(err)
-            if (err.response && err.response.status === 404) {
-              router.push({ name: '404-resource', params: { resource: 'course' } })
+        const coursesStore = useCoursesStore()
+        courseStore.clear()
+        if (coursesStore.isEmpty) {
+          await coursesStore.FetchCourses().then(() => {
+            const course = coursesStore.getCourseById(id)
+            if (course) {
+              courseStore.setCourse(course)
+              const advisor = useAdvisorsStore().getAdvisorById(course.advisor_id)
+              advisor ? courseStore.setLecturer(advisor) : null
             } else {
-              router.push({ name: 'network-error' })
+              router.push({ name: 'not-found' })
             }
           })
+        } else {
+          const course = coursesStore.getCourseById(id)
+          if (course) {
+            courseStore.setCourse(course)
+            const advisor = useAdvisorsStore().getAdvisorById(course.advisor_id)
+            advisor ? courseStore.setLecturer(advisor) : null
+          } else {
+            router.push({ name: 'not-found' })
+          }
+        }
       }
+    },
+    {
+      name: 'add-person',
+      path: '/add',
+      component: AddPersonLayoutVue
+    },
+    {
+      name: 'network-error',
+      path: '/network-error',
+      component: NetworkErrorView
+    },
+    {
+      path: '/:(.*)',
+      name: 'not-found',
+      component: NotFoundErrorView
     }
   ],
   scrollBehavior(to, from, savedPosition) {
