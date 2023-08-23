@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useAdvisorsStore } from "@/stores/advisors";
-import { useStudentsStore } from "@/stores/students";
-import { storeToRefs } from "pinia";
-import { computed, ref, toRefs } from "vue";
-import { type Course, type Student } from "@/types";
 import { useCoursesStore } from "@/stores/courses";
 import { useMessageStore } from "@/stores/message";
+import { useStudentsStore } from "@/stores/students";
+import { type Course, type Student } from "@/types";
+import { storeToRefs } from "pinia";
+import { computed, ref } from "vue";
 const { advisors } = storeToRefs(useAdvisorsStore())
 const coursesStore = useCoursesStore()
 const { courses } = storeToRefs(coursesStore)
