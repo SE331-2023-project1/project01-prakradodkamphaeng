@@ -7,5 +7,5 @@ services:
     ports:
       - "8001:3000"
     volumes:
-      - .:/data
+      - ./db:/data
     restart: always
