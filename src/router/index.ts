@@ -14,7 +14,6 @@ import NetworkErrorView from '@/views/NetworkErrorView.vue'
 import NotFoundErrorView from '@/views/NotFoundErrorView.vue'
 import StudentDetailView from '@/views/StudentDetailView.vue'
 import StudentListView from '@/views/StudentListView.vue'
-import StudentAdvisorView from '@/views/student/StudentAdvisorView.vue'
 import StudentCommentView from '@/views/student/StudentCommentView.vue'
 import StudentCoursesView from '@/views/student/StudentCoursesView.vue'
 import StudentInformationView from '@/views/student/StudentInformationView.vue'
@@ -126,12 +125,6 @@ const router = createRouter({
           path: 'comments',
           name: 'student-comments',
           component: StudentCommentView
-        },
-        {
-          path: 'advisor',
-          alias: 'advisor',
-          name: 'student-advisor',
-          component: StudentAdvisorView
         }
       ]
     },

@@ -17,7 +17,7 @@ const lecturer = storeToRefs(store).lecturer
       <p class="text-emerald-400">Course Description:
         <span class="text-white"> {{ course.course_desc }}</span>
       </p>
-      <p class="text-emerald-400"> Taught by: <RouterLink :to="{ name: 'advisor-detail', params: { id: lecturer.id } }"
+      <p class="text-emerald-400"> Taught by: <RouterLink :to="{ name: 'advisor-information', params: { id: lecturer.id } }"
           class="text-white underline hover:brightness-75">{{ lecturer.prefix ? lecturer.prefix + ' ' : '' }}{{
             lecturer.first_name }}
           {{ lecturer.last_name }}</RouterLink>
