@@ -8,6 +8,7 @@ const advisor = ref<Advisor>({
   last_name: '',
   image: '',
   prefix: '',
+  faculty: '',
 })
 function submitForm() {
   RegistryService.insertAdvisor(advisor.value).then((res) => {
@@ -16,6 +17,7 @@ function submitForm() {
       last_name: '',
       image: '',
       prefix: '',
+      faculty: '',
     }
     useMessageStore().flashMessage('Added an advisor successfully.')
   })
@@ -46,6 +48,12 @@ function submitForm() {
         <input type="text"
           class="md:text-xl w-full text-black bg-transparent border-b border-stone-400 focus:outline-none focus:border-stone-700 transition-colors"
           placeholder="" v-model="advisor.last_name" required />
+      </div>
+      <div class="col-span-7">
+        <label class="text-xs text-stone-700">Faculty</label>
+        <input type="text"
+          class="md:text-xl w-full text-black bg-transparent border-b border-stone-400 focus:outline-none focus:border-stone-700 transition-colors"
+          placeholder="" v-model="advisor.faculty" required />
       </div>
 
       <div class="col-span-7">

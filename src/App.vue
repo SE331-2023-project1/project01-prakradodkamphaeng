@@ -16,14 +16,17 @@ function toggleMenuOpen() {
   <div class="flex flex-col sm:flex-row sm:min-h-screen">
     <div class="flex flex-col sm:flex-row sticky top-0 z-10 max-h-screen">
       <nav
-        class="z-50 flex flex-col font-sans gap-2 text-white items-center bg-stone-800 p-4 overflow-hidden transition-all duration-300 shadow-xl"
+        class="z-50 flex flex-col font-sans gap-4 text-white items-center bg-stone-800 p-4 overflow-hidden transition-all duration-300 shadow-xl"
         :class="{ 'sm:max-w-0 sm:px-0 sm:max-h-fit sm:py-4 max-h-0 py-0': !menuOpened, 'sm:max-w-screen-sm max-h-[720px] sm:max-h-full': menuOpened }">
-        <RouterLink :to="{ name: 'student-list', query: { page: 1 } }" class="min-w-fit text-2xl font-bold">STUDENT<span
-            class="bg-clip-text bg-gradient-to-r from-lime-400 via-emerald-400 to-sky-400 text-transparent">CONNECT</span>
-        </RouterLink>
+        <div class="flex flex-col w-full items-center">
+          <RouterLink :to="{ name: 'student-list', query: { page: 1 } }" class="min-w-fit text-2xl font-bold">STUDENT<span
+              class="bg-clip-text bg-gradient-to-r from-lime-400 via-emerald-400 to-sky-400 text-transparent">CONNECT</span>
+          </RouterLink>
+          <p class="font-serif text-xs text-transparent bg-clip-text bg-gradient-to-b from-amber-400 to-red-500 font-bold">#1 in Registration Office Industry</p>
+        </div>
         <div class="flex flex-col w-full items-end">
           <RouterLink :to="{ name: 'student-list', query: { page: 1 } }"
-            class="min-w-fit flex flex-row gap-2 items-center text-lg font-semibold [&.router-link-active]:bg-emerald-400 hover:brightness-75 w-full hover:text-emerald-400 [&.router-link-active]:text-white px-2 py-1 rounded-md">
+            class="min-w-fit flex flex-row gap-2 items-center text-lg font-semibold [&.router-link-active]:bg-gradient-to-r from-emerald-400 to-sky-500 hover:brightness-75 w-full hover:text-emerald-400 [&.router-link-active]:text-white px-2 py-1 rounded-md">
             <svg class="w-6 h-6" fill="currentColor" height="64px" width="64px" version="1.1" id="Capa_1"
               xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 408.191 408.191"
               xml:space="preserve" stroke="currentColor" stroke-width="2" transform="rotate(0)">
@@ -45,7 +48,7 @@ function toggleMenuOpen() {
             </span>
           </RouterLink>
           <RouterLink :to="{ name: 'advisor-list', query: { page: 1 } }"
-            class="min-w-fit flex flex-row gap-2 items-center text-lg font-semibold [&.router-link-active]:bg-emerald-400 hover:brightness-75 w-full hover:text-emerald-400 [&.router-link-active]:text-white px-2 py-1 rounded-md">
+            class="min-w-fit flex flex-row gap-2 items-center text-lg font-semibold [&.router-link-active]:bg-gradient-to-r from-emerald-400 to-sky-500  hover:brightness-75 w-full hover:text-emerald-400 [&.router-link-active]:text-white px-2 py-1 rounded-md">
             <svg class="w-6 h-6" fill="currentColor" height="64px" width="64px" version="1.1" id="Capa_1"
               xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 469.603 469.603"
               xml:space="preserve" stroke="currentColor" stroke-width="6">
@@ -60,7 +63,7 @@ function toggleMenuOpen() {
             <span>Advisor</span>
           </RouterLink>
           <RouterLink :to="{ name: 'course-list', query: { page: 1 } }"
-            class="min-w-fit flex flex-row gap-2 items-center text-lg font-semibold [&.router-link-active]:bg-emerald-400 hover:brightness-75 w-full hover:text-emerald-400 [&.router-link-active]:text-white px-2 py-1 rounded-md">
+            class="min-w-fit flex flex-row gap-2 items-center text-lg font-semibold [&.router-link-active]:bg-gradient-to-r from-emerald-400 to-sky-500  hover:brightness-75 w-full hover:text-emerald-400 [&.router-link-active]:text-white px-2 py-1 rounded-md">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -69,7 +72,7 @@ function toggleMenuOpen() {
             <span>Course</span>
           </RouterLink>
           <RouterLink :to="{ name: 'add-person', query: { page: 1 } }"
-            class="min-w-fit flex flex-row gap-2 items-center text-lg font-semibold [&.router-link-active]:bg-emerald-400 hover:brightness-75 w-full hover:text-emerald-400 [&.router-link-active]:text-white px-2 py-1 rounded-md">
+            class="min-w-fit flex flex-row gap-2 items-center text-lg font-semibold [&.router-link-active]:bg-gradient-to-r from-emerald-400 to-sky-500  hover:brightness-75 w-full hover:text-emerald-400 [&.router-link-active]:text-white px-2 py-1 rounded-md">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round"

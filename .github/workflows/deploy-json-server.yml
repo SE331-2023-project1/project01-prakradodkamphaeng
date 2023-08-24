@@ -1,0 +1,46 @@
+name: Deploy to json server
+'on':
+  push:
+    branches:
+      - main
+jobs:
+  deploy-docker:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Copy compose file via ssh
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST_SERVER }}
+          username: ${{ secrets.HOST_USER_NAME }}
+          key: ${{ secrets.HOST_SSH_PRIVATE_KEY }}
+          port: 22
+          source: "docker-compose.yml"
+          target: "/home/ubuntu/db-json"  
+      -
+        name: Copy db.json file via ssh
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST_SERVER }}
+          username: ${{ secrets.HOST_USER_NAME }}
+          key: ${{ secrets.HOST_SSH_PRIVATE_KEY }}
+          port: 22
+          source: "db.json"
+          target: "/home/ubuntu/db-json/db"
+      -
+        name: docker compose up
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOST_SERVER }}
+          username: ${{ secrets.HOST_USER_NAME }}
+          key: ${{ secrets.HOST_SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd /home/ubuntu/db-json
+            docker compose down
+            docker compose pull
+            docker compose up -d
+     

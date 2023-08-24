@@ -10,16 +10,18 @@ const { advisor } = storeToRefs(store)
 <template>
   <main v-if="advisor">
     <div class="flex flex-col lg:flex-row p-4 bg-stone-700 shadow-md gap-4 border-emerald-400">
-      <img :src="advisor.image" class="w-32 aspect-square object-cover shadow-md" />
+      <img :src="advisor.image" class="w-32 aspect-square object-cover shadow-lg" />
       <div class="flex flex-col justify-between">
-        <div>
-          <h2 class="text-3xl">{{ advisor.prefix ? advisor.prefix + ' ' : '' }}{{ advisor.first_name }} {{
-            advisor.last_name }}</h2>
-        </div>
+        <RouterLink :to="{ name: 'advisor-detail', params: { id: advisor.id } }" class="group">
+          <p class="text-3xl group-hover:text-emerald-400 transition-colors">{{ advisor.prefix ?
+              advisor.prefix + ' ' : '' }}{{ advisor.first_name }} {{
+    advisor.last_name }}</p>
+          <p class="font-light opacity-75 group-hover:text-emerald-400 transition-colors">{{ advisor.faculty }}</p>
+        </RouterLink>
         <div class="flex flex-row">
           <p class="text-md">Contact Advisor:</p>
-          <span class="text-emerald-400 hover:brightness-75 underline cursor-pointer ml-2">{{
-            `${advisor.first_name.toLowerCase()}.${advisor.last_name.toLowerCase()[0]}@cmu.ac.th` }} </span>
+          <a :href="`mailto:${advisor.first_name.toLowerCase()}.${advisor.last_name.toLowerCase()[0]}@cmu.ac.th`" class="text-emerald-400 hover:brightness-75 underline ml-2">{{
+            `${advisor.first_name.toLowerCase()}.${advisor.last_name.toLowerCase()[0]}@cmu.ac.th` }} </a>
         </div>
       </div>
     </div>
