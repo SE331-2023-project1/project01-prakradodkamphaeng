@@ -13,7 +13,7 @@ defineProps({
 <template>
   <RouterLink :to="{ name: 'advisor-detail', params: { id: advisor.id } }">
     <div
-      class="flex flex-row sm:flex-col overflow-hidden shadow-md bg-stone-800 hover:border-b-2 hover:pb-[2px] transition-all border-emerald-400 duration-100 group">
+      class="flex flex-row h-full sm:flex-col overflow-hidden shadow-md bg-stone-800 hover:border-emerald-400 transition-all border-r-2 sm:border-r-0 sm:border-b-2 border-transparent duration-100 group">
       <div>
         <img :src=advisor.image class="w-full aspect-square"
           alt="{{ advisor.prefix ? advisor.prefix + ' ': '' }}{{advisor.first_name}} {{advisor.last_name}}" />
@@ -22,8 +22,7 @@ defineProps({
         <p class="text-xs opacity-50">#{{ advisor.id }}</p>
         <p class="text-lg group-hover:text-emerald-400 transition-colors text-ellipsis">{{ advisor.prefix ? advisor.prefix
           + ' ' : '' }}{{ advisor.first_name }} {{ advisor.last_name }}</p>
-        <p class="text-sm font-light opacity-75">{{ advisor.faculty
-        }}</p>
+        <p class="text-sm font-light opacity-75">{{ advisor.faculty }}</p>
       </div>
     </div>
   </RouterLink>
