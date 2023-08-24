@@ -1,8 +1,12 @@
 import RegistryService from '@/services/RegistryService'
 import { useCourseStore } from '@/stores/course'
 import { useStudentStore } from '@/stores/student'
+import { useAdvisorStore } from '@/stores/advisor'
 import AddPersonLayoutVue from '@/views/AddPersonLayout.vue'
 import AdvisorDetailView from '@/views/AdvisorDetailView.vue'
+import AdvisorInformationView from '@/views/advisor/AdvisorInformationView.vue'
+import AdvisorCourseView from '@/views/advisor/AdvisorCourseView.vue'
+import AdvisorStudentView from '@/views/advisor/AdvisorStudentView.vue'
 import AdvisorListView from '@/views/AdvisorListView.vue'
 import CourseDetail from '@/views/CourseDetail.vue'
 import CourseListView from '@/views/CourseListView.vue'
@@ -41,7 +45,37 @@ const router = createRouter({
       path: '/advisor/:id(\\d+)',
       name: 'advisor-detail',
       component: AdvisorDetailView,
-      props: true
+      props: true,
+      beforeEnter: async (to) => {
+        const id: number = parseInt(to.params.id as string)
+        const advisorStore = useAdvisorStore()
+        advisorStore.clear()
+        advisorStore.setAdvisor(
+          await RegistryService.getAdvisorExpanded(id).then((res) => {
+            return res.data
+          })
+        )
+      },
+      children: [
+        {
+          path: '',
+          alias: 'information',
+          name: 'advisor-information',
+          component: AdvisorInformationView
+        },
+        {
+          path: 'courses',
+          alias: 'courses',
+          name: 'advisor-courses',
+          component: AdvisorCourseView
+        },
+        {
+          path: 'advisor',
+          alias: 'advisor',
+          name: 'advisor-student',
+          component: AdvisorStudentView
+        }
+      ]
     },
     {
       path: '/',
