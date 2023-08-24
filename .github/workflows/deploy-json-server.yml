@@ -15,6 +15,7 @@ jobs:
         run: |
               mkdir json-server
               cp docker-compose.yml json-server/docker-compose.yml
+              cp db.json json-server/db/db.json
               cd json-server
               docker-compose -H ${{ secrets.HOST_SERVER }} -f docker-compose.yml down
               docker-compose -H ${{ secrets.HOST_SERVER }} -f docker-compose.yml pull
