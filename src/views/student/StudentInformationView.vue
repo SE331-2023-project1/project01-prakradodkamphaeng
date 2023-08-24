@@ -1,10 +1,21 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useStudentStore } from "@/stores/student";
+import { computed } from "vue";
 
 const store = useStudentStore()
 const { student, advisor } = storeToRefs(store)
 const intl = new Intl.DisplayNames(['en'], { type: 'region' })
+const nationality = computed(() => {
+  if (student.value?.nationality) {
+    try {
+      return intl.of(student.value.nationality)
+    } catch {
+      return student.value?.nationality
+    }
+  }
+  return student.value?.nationality
+})
 
 </script>
 
@@ -40,7 +51,7 @@ const intl = new Intl.DisplayNames(['en'], { type: 'region' })
     </div>
     <div class="flex flex-col">
       <p class="text-sm opacity-50">Nationality</p>
-      <p class="text-xl">{{ intl.of(student.nationality) }}</p>
+      <p class="text-xl">{{ nationality }}</p>
     </div>
   </main>
   <main v-else>

@@ -1,15 +1,21 @@
 <script setup lang="ts">
 import type { Student } from '@/types';
-import type { PropType } from 'vue';
+import { type PropType, computed } from 'vue';
 const intl = new Intl.DisplayNames(['en'], {type: 'region'})
 
-defineProps({
+const props = defineProps({
   student: {
     type: Object as PropType<Student>,
     required: true
   }
 })
-
+const nationality = computed(() => {
+  try {
+    return intl.of(props.student.nationality)
+  } catch {
+    return props.student.nationality
+  }
+})
 </script>
 
 <template>
@@ -21,7 +27,7 @@ defineProps({
         <p class="text-xs opacity-50">#{{ student.id }}</p>
         <p class="text-xl group-hover:text-emerald-400 transition-colors duration-100">{{ `${student.first_name}
                   ${student.last_name}` }}</p>
-        <p class="text-sm transition-colors duration-100 opacity-75">{{ intl.of(student.nationality) }}</p>
+        <p class="text-sm transition-colors duration-100 opacity-75">{{ nationality }}</p>
       </div>
     </div>
   </RouterLink></template>
