@@ -15,15 +15,11 @@ const lecturer = storeToRefs(store).lecturer
     <div class="flex flex-col gap-4">
 
       <p class="text-emerald-400">Course Description:
-        <span class="text-white"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec leo est, rhoncus sed est
-          in, pulvinar placerat ex. Aenean auctor, dui ac molestie congue, purus ante luctus justo, at dapibus turpis
-          ipsum finibus felis. Suspendisse egestas odio a nisi pulvinar ornare. Donec est nibh, vehicula eget quam eu,
-          ullamcorper ultrices leo. In hac habitasse platea dictumst. Suspendisse ac est ut augue consequat scelerisque.
-          Vivamus at metus cursus est viverra aliquam. Sed blandit ultrices varius. Donec enim libero, auctor vel vehicula
-          nec, tristique in nisl. Sed pulvinar leo in urna porttitor ullamcorper.</span>
+        <span class="text-white"> {{ course.course_desc }}</span>
       </p>
       <p class="text-emerald-400"> Taught by: <RouterLink :to="{ name: 'advisor-detail', params: { id: lecturer.id } }"
-          class="text-white underline hover:brightness-75">{{ lecturer.prefix ? lecturer.prefix + ' ' : '' }}{{ lecturer.first_name }}
+          class="text-white underline hover:brightness-75">{{ lecturer.prefix ? lecturer.prefix + ' ' : '' }}{{
+            lecturer.first_name }}
           {{ lecturer.last_name }}</RouterLink>
       </p>
     </div>

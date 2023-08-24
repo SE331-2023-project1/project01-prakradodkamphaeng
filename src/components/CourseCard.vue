@@ -21,16 +21,7 @@ defineProps({
       </div>
       <p
         class="opacity-50 text-justify max-h-64 text-ellipsis overflow-hidden sm:text-white text-transparent bg-clip-text bg-gradient-to-b from-white from-80% to-95% to-transparent">
-        Lorem ipsum
-        dolor sit amet,
-        consectetur adipiscing elit. Donec leo est, rhoncus sed est
-        in, pulvinar placerat ex. Aenean auctor, dui ac molestie congue, purus ante luctus justo, at dapibus turpis
-        ipsum
-        finibus felis. Suspendisse egestas odio a nisi pulvinar ornare. Donec est nibh, vehicula eget quam eu,
-        ullamcorper
-        ultrices leo. In hac habitasse platea dictumst. Suspendisse ac est ut augue consequat scelerisque. Vivamus at
-        metus cursus est viverra aliquam. Sed blandit ultrices varius. Donec enim libero, auctor vel vehicula nec,
-        tristique in nisl. Sed pulvinar leo in urna porttitor ullamcorper.
+        {{ course.course_desc }}
       </p>
 
     </div>

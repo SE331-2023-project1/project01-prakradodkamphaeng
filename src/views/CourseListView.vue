@@ -15,7 +15,7 @@ const router = useRouter()
 const courses = ref<Course[]>()
 const courses_count = ref<number>(0)
 const maxPage = computed(() => {
-  return Math.ceil(courses_count.value / 4)
+  return Math.ceil(courses_count.value / 6)
 })
 
 const hasNextPage = computed(() => {
@@ -27,7 +27,7 @@ watchEffect(() => {
 })
 
 function changePage(page: number) {
-  RegistryService.getCourses(4, page).then((res) => {
+  RegistryService.getCourses(6, page).then((res) => {
     courses.value = res.data
     courses_count.value = res.headers['x-total-count']
   }).catch(() => {

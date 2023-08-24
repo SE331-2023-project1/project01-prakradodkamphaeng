@@ -20,7 +20,10 @@ defineProps({
       </div>
       <div class="px-6 py-4">
         <p class="text-xs opacity-50">#{{ advisor.id }}</p>
-        <p class="text-xl group-hover:text-emerald-400 transition-colors text-ellipsis">{{ advisor.prefix ? advisor.prefix + ' ': '' }}{{ advisor.first_name }} {{ advisor.last_name }}</p>
+        <p class="text-lg group-hover:text-emerald-400 transition-colors text-ellipsis">{{ advisor.prefix ? advisor.prefix
+          + ' ' : '' }}{{ advisor.first_name }} {{ advisor.last_name }}</p>
+        <p class="text-sm font-light opacity-75">{{ advisor.faculty
+        }}</p>
       </div>
     </div>
   </RouterLink>
