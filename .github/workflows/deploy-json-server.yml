@@ -13,7 +13,7 @@ jobs:
       - 
         name: Prepare docker-compose run
         run: |
-              mkdir json-server/db
+              mkdir -p json-server/db
               cp docker-compose.yml json-server/docker-compose.yml
               cp db.json json-server/db/db.json
               ls -a
