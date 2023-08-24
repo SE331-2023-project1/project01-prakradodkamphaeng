@@ -14,6 +14,8 @@ export interface Advisor {
   last_name: string
   image: string
   prefix: string
+  student?: Student[]
+  course?: Course[]
 }
 
 export interface Course {
