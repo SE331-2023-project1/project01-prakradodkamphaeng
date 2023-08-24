@@ -4,6 +4,9 @@
           <p class="text-xs opacity-50">
               #{{ course.id }}
           </p>
+          <div class="flex sm:flex-row flex-col items-baseline gap-2">
+            <p class="text-lg sm:text-3xl font-bold group-hover:text-emerald-400 ">{{ course.course_name }}</p>
+        </div>
       </div>
     </RouterLink>
   </template>

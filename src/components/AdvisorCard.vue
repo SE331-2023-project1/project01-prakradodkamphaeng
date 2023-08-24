@@ -11,7 +11,7 @@ defineProps({
 </script>
 
 <template>
-  <RouterLink :to="{ name: 'advisor-detail', params: { id: advisor.id } }">
+  <RouterLink :to="{ name: 'advisor-information', params: { id: advisor.id } }">
     <div
       class="flex flex-row sm:flex-col overflow-hidden shadow-md bg-stone-800 hover:border-b-2 hover:pb-[2px] transition-all border-emerald-400 duration-100 group">
       <div>
