@@ -3,7 +3,7 @@ import { storeToRefs } from "pinia";
 import { useStudentStore } from "@/stores/student";
 
 const store = useStudentStore()
-const student = storeToRefs(store).student
+const { student } = storeToRefs(store)
 
 </script>
 
