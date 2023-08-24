@@ -1,21 +1,19 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import CourseCard from "@/components/CourseCard.vue";
-import { useCoursesStore } from "@/stores/courses";
-import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+import type { Course } from "@/types";
+import RegistryService from "@/services/RegistryService";
 
-
-const { courses } = storeToRefs(useCoursesStore())
 const props = defineProps({
   page: {
     type: Number,
     required: true
   }
 })
-const courses_count = computed(() => courses.value.length)
-const courses_slice = computed(() => {
-  return courses.value.slice(4 * (props.page - 1), 4 * (props.page - 1) + 4)
-})
+const router = useRouter()
+const courses = ref<Course[]>()
+const courses_count = ref<number>(0)
 const maxPage = computed(() => {
   return Math.ceil(courses_count.value / 4)
 })
@@ -24,12 +22,25 @@ const hasNextPage = computed(() => {
   return props.page.valueOf() < maxPage.value
 })
 
+watchEffect(() => {
+  changePage(props.page)
+})
+
+function changePage(page: number) {
+  RegistryService.getCourses(4, page).then((res) => {
+    courses.value = res.data
+    courses_count.value = res.headers['x-total-count']
+  }).catch(() => {
+    router.push({ name: 'NetworkError' })
+  })
+}
+
 </script>
 
 <template>
   <main class="w-full max-w-6xl flex flex-col items-center gap-4">
     <div class="flex flex-col gap-4">
-      <CourseCard :course="course" v-for="course in courses_slice" :key="course.id" />
+      <CourseCard :course="course" v-for="course in courses" :key="course.id" />
     </div>
     <div class="flex justify-between w-full items-center">
       <RouterLink

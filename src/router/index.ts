@@ -1,22 +1,21 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import StudentListView from '@/views/StudentListView.vue'
-import StudentDetailView from '@/views/StudentDetailView.vue'
-import StudentCoursesView from '@/views/student/StudentCoursesView.vue'
-import StudentCommentView from '@/views/student/StudentCommentView.vue'
-import { useStudentStore } from '@/stores/student'
-import CourseListView from '@/views/CourseListView.vue'
-import CourseDetail from '@/views/CourseDetail.vue'
+import RegistryService from '@/services/RegistryService'
 import { useCourseStore } from '@/stores/course'
-import AdvisorListView from '@/views/AdvisorListView.vue'
-import StudentAdvisorView from '@/views/student/StudentAdvisorView.vue'
-import StudentInformationView from '@/views/student/StudentInformationView.vue'
-import { useStudentsStore } from '@/stores/students'
+import { useStudentStore } from '@/stores/student'
 import AddPersonLayoutVue from '@/views/AddPersonLayout.vue'
 import AdvisorDetailView from '@/views/AdvisorDetailView.vue'
-import { useCoursesStore } from '@/stores/courses'
-import { useAdvisorsStore } from '@/stores/advisors'
+import AdvisorListView from '@/views/AdvisorListView.vue'
+import CourseDetail from '@/views/CourseDetail.vue'
+import CourseListView from '@/views/CourseListView.vue'
 import NetworkErrorView from '@/views/NetworkErrorView.vue'
 import NotFoundErrorView from '@/views/NotFoundErrorView.vue'
+import StudentDetailView from '@/views/StudentDetailView.vue'
+import StudentListView from '@/views/StudentListView.vue'
+import StudentAdvisorView from '@/views/student/StudentAdvisorView.vue'
+import StudentCommentView from '@/views/student/StudentCommentView.vue'
+import StudentCoursesView from '@/views/student/StudentCoursesView.vue'
+import StudentInformationView from '@/views/student/StudentInformationView.vue'
+import nProgress from 'nprogress'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -69,22 +68,12 @@ const router = createRouter({
       beforeEnter: async (to) => {
         const id: number = parseInt(to.params.id as string)
         const studentStore = useStudentStore()
-        const studentsStore = useStudentsStore()
-        if (studentsStore.isEmpty) {
-          await studentsStore.FetchStudents().then(() => {
-            studentStore.clear()
-            const student = studentsStore.getStudentById(id)
-            student
-              ? studentStore.setStudent(student)
-              : router.push({ name: '404-resource' })
+        studentStore.clear()
+        studentStore.setStudent(
+          await RegistryService.getStudent(id).then((res) => {
+            return res.data
           })
-        } else {
-          studentStore.clear()
-          const student = studentsStore.getStudentById(id)
-          student
-            ? studentStore.setStudent(student)
-            : router.push({ name: '404-resource' })
-        }
+        )
       },
       children: [
         {
@@ -137,29 +126,12 @@ const router = createRouter({
       beforeEnter: async (to) => {
         const id: number = parseInt(to.params.id as string)
         const courseStore = useCourseStore()
-        const coursesStore = useCoursesStore()
         courseStore.clear()
-        if (coursesStore.isEmpty) {
-          await coursesStore.FetchCourses().then(() => {
-            const course = coursesStore.getCourseById(id)
-            if (course) {
-              courseStore.setCourse(course)
-              const advisor = useAdvisorsStore().getAdvisorById(course.advisor_id)
-              advisor ? courseStore.setLecturer(advisor) : null
-            } else {
-              router.push({ name: '404-resource' })
-            }
+        courseStore.setCourse(
+          await RegistryService.getCourse(id).then((res) => {
+            return res.data
           })
-        } else {
-          const course = coursesStore.getCourseById(id)
-          if (course) {
-            courseStore.setCourse(course)
-            const advisor = useAdvisorsStore().getAdvisorById(course.advisor_id)
-            advisor ? courseStore.setLecturer(advisor) : null
-          } else {
-            router.push({ name: '404-resource' })
-          }
-        }
+        )
       }
     },
     {
@@ -187,6 +159,14 @@ const router = createRouter({
     if (savedPosition) return savedPosition
     else return { top: 0 }
   }
+})
+
+router.beforeEach(() => {
+  nProgress.start()
+})
+
+router.afterEach(() => {
+  nProgress.done()
 })
 
 export default router

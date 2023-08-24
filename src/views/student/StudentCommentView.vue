@@ -2,8 +2,8 @@
 import { useStudentStore } from '@/stores/student';
 import { storeToRefs } from 'pinia';
 import { computed, ref } from "vue";
-import { useStudentsStore } from '@/stores/students';
 import { useMessageStore } from '@/stores/message';
+import RegistryService from '@/services/RegistryService';
 
 
 const { student } = storeToRefs(useStudentStore())
@@ -14,7 +14,8 @@ const comment = ref<string>("")
 const submitHandler = async () => {
   if (comment.value.trim().length <= 0) return
   if (!student.value?.id) return;
-  useStudentsStore().addComment(student.value.id, comment.value)
+  student.value.comments.push(comment.value)
+  RegistryService.updateStudent(student.value.id, student.value)
   comment.value = ""
   useMessageStore().flashMessage("Added a comment successfully.")
 }

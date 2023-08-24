@@ -1,26 +1,24 @@
 <script setup lang="ts">
-import { useAdvisorsStore } from "@/stores/advisors";
-import { storeToRefs } from "pinia";
-import { computed, ref, toRefs } from "vue";
-import { type Advisor, type Course, type Student } from "@/types";
-import { useCoursesStore } from "@/stores/courses";
+import RegistryService from "@/services/RegistryService";
 import { useMessageStore } from "@/stores/message";
-const advisorsStore = useAdvisorsStore()
+import { type Advisor } from "@/types";
+import { ref } from "vue";
 const advisor = ref<Advisor>({
-  id: -1,
   first_name: '',
   last_name: '',
   image: '',
+  prefix: '',
 })
 function submitForm() {
-  advisorsStore.addAdvisor(advisor.value)
-  advisor.value = {
-    id: -1,
-    first_name: '',
-    last_name: '',
-    image: '',
-  }
-  useMessageStore().flashMessage('Added an advisor successfully.')
+  RegistryService.insertAdvisor(advisor.value).then((res) => {
+    advisor.value = {
+      first_name: '',
+      last_name: '',
+      image: '',
+      prefix: '',
+    }
+    useMessageStore().flashMessage('Added an advisor successfully.')
+  })
 }
 </script>
 

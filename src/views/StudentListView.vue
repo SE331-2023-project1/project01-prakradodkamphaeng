@@ -1,19 +1,18 @@
 <script setup lang="ts">
 import StudentCard from '@/components/StudentCard.vue';
-import { computed } from 'vue';
-import { useStudentsStore } from '@/stores/students';
-import { storeToRefs } from 'pinia';
-const { students } = storeToRefs(useStudentsStore())
+import RegistryService from '@/services/RegistryService';
+import { computed, ref, watchEffect } from 'vue';
+import { useRouter } from 'vue-router';
+import { type Student } from '@/types';
 const props = defineProps({
   page: {
     type: Number,
     required: true
   }
 })
-const students_count = computed(() => students.value.length)
-const students_slice = computed(() => {
-  return students.value.slice(10 * (props.page - 1), 10 * (props.page - 1) + 10)
-})
+const router = useRouter()
+const students = ref<Student[]>()
+const students_count = ref<number>(0)
 const maxPage = computed(() => {
   return Math.ceil(students_count.value / 10)
 })
@@ -22,12 +21,25 @@ const hasNextPage = computed(() => {
   return props.page.valueOf() < maxPage.value
 })
 
+watchEffect(() => {
+  changePage(props.page)
+})
+
+function changePage(page: number) {
+  RegistryService.getStudents(10, page).then((res) => {
+    students.value = res.data
+    students_count.value = res.headers['x-total-count']
+  }).catch(() => {
+    router.push({ name: 'NetworkError' })
+  })
+}
+
 </script>
 
 <template>
   <main class="w-full px-4 sm:p-0 sm:w-2/3  flex flex-col items-center gap-4">
     <div class="grid gap-4 w-full lg:grid-cols-2 grid-cols-1">
-      <StudentCard :student="student" v-for="student in students_slice" :key="student.id"></StudentCard>
+      <StudentCard :student="student" v-for="student in students" :key="student.id"></StudentCard>
     </div>
     <div class="flex justify-between w-full  items-center">
       <RouterLink

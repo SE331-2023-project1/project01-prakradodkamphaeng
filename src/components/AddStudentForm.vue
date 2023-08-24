@@ -1,51 +1,48 @@
 <script setup lang="ts">
-import { useAdvisorsStore } from "@/stores/advisors";
-import { useStudentsStore } from "@/stores/students";
-import { storeToRefs } from "pinia";
-import { computed, ref, toRefs } from "vue";
-import { type Course, type Student } from "@/types";
-import { useCoursesStore } from "@/stores/courses";
+import RegistryService from "@/services/RegistryService";
 import { useMessageStore } from "@/stores/message";
-const { advisors } = storeToRefs(useAdvisorsStore())
-const coursesStore = useCoursesStore()
-const { courses } = storeToRefs(coursesStore)
-const studentsStore = useStudentsStore()
+import { type Course, type Advisor, type Student } from "@/types";
+import { computed, ref } from "vue";
+const advisors = ref<Advisor[]>([])
+RegistryService.getAdvisors(-1).then((res) => advisors.value = res.data)
+const courses = ref<Course[]>([])
+RegistryService.getCourses(-1).then((res) => courses.value = res.data)
 const searchWord = ref<string>('')
 const student = ref<Student>({
-  id: -1,
   first_name: '',
   last_name: '',
   image: '',
-  courses: [],
-  comments: [],
-  advisor_id: -1
+  courseId: [],
+  advisorId: -1,
+  comments: []
 })
 const courseAfterSearch = computed(() => {
-  return courses.value.filter((x) => x.course_name.toLocaleLowerCase().startsWith(searchWord.value.toLocaleLowerCase()))
+  return courses.value.filter((x) => x.course_name.toLowerCase().startsWith(searchWord.value.toLowerCase()))
 })
 const coursesDisplay = computed(() => {
-  return student.value.courses.map((v) => coursesStore.getCourseById(v)).filter((v) => v !== undefined) as Course[]
+  return student.value.courseId.map((v) => courses.value.find((x) => x.id === v)).filter((x) => x !== undefined) as Course[]
 })
 function addCourseToStudent(id: number) {
-  if (!student.value.courses.includes(id))
-    student.value.courses.push(id);
+  if (!student.value.courseId.includes(id))
+    student.value.courseId.push(id);
   (document.activeElement as HTMLElement | null)?.blur();
 }
 function removeCourseFromStudent(id: number) {
-  student.value.courses = student.value.courses.filter((x) => x !== id)
+  student.value.courseId = student.value.courseId.filter((x) => x !== id)
 }
 function submitForm() {
-  studentsStore.addStudent(student.value)
-  student.value = {
-    id: -1,
-    first_name: '',
-    last_name: '',
-    image: '',
-    courses: [],
-    comments: [],
-    advisor_id: -1
-  }
-  useMessageStore().flashMessage('Added a student successfully.')
+  RegistryService.insertStudent(student.value).then((res) => {
+    student.value = {
+      first_name: '',
+      last_name: '',
+      image: '',
+      courseId: [],
+      advisorId: -1,
+      comments: []
+    }
+    console.log(res.data)
+    useMessageStore().flashMessage('Added a student successfully.')
+  })
 }
 </script>
 
@@ -81,7 +78,7 @@ function submitForm() {
 
       <div class="col-span-2">
         <label class="text-xs text-stone-700">Advisor</label>
-        <select id="advisor" class="w-full text-black bg-transparent" v-model="student.advisor_id">
+        <select id="advisor" class="w-full text-black bg-transparent" v-model="student.advisorId">
           <option v-for="advisor in advisors" :value="advisor.id" :key="advisor.id">{{ `${advisor.first_name}
                       ${advisor.last_name}` }}
           </option>
@@ -94,7 +91,7 @@ function submitForm() {
           class="flex flex-row flex-wrap gap-1 [&>*:nth-child(4n+1)]:bg-emerald-500 [&>*:nth-child(4n+2)]:bg-teal-500 [&>*:nth-child(4n+3)]:bg-sky-500 [&>*:nth-child(4n+4)]:bg-blue-500">
           <div v-for="course in coursesDisplay"
             class="rounded-r-full rounded-l-full px-2 py-1 text-xs flex flex-row items-center gap-1" :key="course.id">
-            <button type="button" @click="removeCourseFromStudent(course.id)"><svg xmlns="http://www.w3.org/2000/svg"
+            <button type="button" @click="removeCourseFromStudent(course.id!)"><svg xmlns="http://www.w3.org/2000/svg"
                 fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -108,7 +105,7 @@ function submitForm() {
         <div
           class="text-black hidden peer-focus:flex overflow-hidden transition-all absolute bg-white border border-stone-700 w-full flex-col shadow-lg">
           <button type="button" class="hover:bg-emerald-400 hover:text-white px-1" v-for="course in courseAfterSearch"
-            :key="course.id" @mousedown.prevent="" @click="addCourseToStudent(course.id)">{{ course.course_name
+            :key="course.id" @mousedown.prevent="" @click="addCourseToStudent(course.id!)">{{ course.course_name
             }}</button>
         </div>
       </div>

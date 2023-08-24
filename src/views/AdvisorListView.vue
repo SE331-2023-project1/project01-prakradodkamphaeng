@@ -1,21 +1,20 @@
 <script setup lang="ts">
-import { computed } from "vue";
 import AdvisorCard from "@/components/AdvisorCard.vue";
-import { useAdvisorsStore } from "@/stores/advisors";
-import { storeToRefs } from "pinia";
+import RegistryService from "@/services/RegistryService";
+import type { Advisor } from "@/types";
+import { computed, ref, watchEffect } from "vue";
+import { useRouter } from "vue-router";
 
 
-const { advisors } = storeToRefs(useAdvisorsStore())
 const props = defineProps({
   page: {
     type: Number,
     required: true
   }
 })
-const advisors_count = computed(() => advisors.value.length)
-const advisors_slice = computed(() => {
-  return advisors.value.slice(4 * (props.page - 1), 4 * (props.page - 1) + 4)
-})
+const router = useRouter()
+const advisors = ref<Advisor[]>()
+const advisors_count = ref<number>(0)
 const maxPage = computed(() => {
   return Math.ceil(advisors_count.value / 4)
 })
@@ -23,12 +22,25 @@ const maxPage = computed(() => {
 const hasNextPage = computed(() => {
   return props.page.valueOf() < maxPage.value
 })
+
+watchEffect(() => {
+  changePage(props.page)
+})
+
+function changePage(page: number) {
+  RegistryService.getAdvisors(4, page).then((res) => {
+    advisors.value = res.data
+    advisors_count.value = res.headers['x-total-count']
+  }).catch(() => {
+    router.push({ name: 'NetworkError' })
+  })
+}
 </script>
 
 <template>
   <main class="sm:w-2/3 w-full flex flex-col justify-center items-center gap-4">
     <div class="flex flex-col items-stretch sm:grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 relative">
-      <AdvisorCard :advisor="advisor" v-for="advisor in advisors_slice" :key="advisor.id"></AdvisorCard>
+      <AdvisorCard :advisor="advisor" v-for="advisor in advisors" :key="advisor.id"></AdvisorCard>
     </div>
     <div class="flex justify-between w-full items-center">
       <RouterLink

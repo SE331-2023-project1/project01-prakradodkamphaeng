@@ -13,33 +13,33 @@ const apiClient = axios.create({
 export default {
   getStudents(pgSize: number, pgN: number = 1): Promise<AxiosResponse<Student[]>> {
     return apiClient.get<Student[]>(
-      `/students?${pgSize > 0 ? `_limit=${pgSize}&_page=${pgN}` : ''}`
+      `/student?${pgSize > 0 ? `_limit=${pgSize}&_page=${pgN}` : ''}`
     )
   },
   getAdvisors(pgSize: number, pgN: number = 1): Promise<AxiosResponse<Advisor[]>> {
     return apiClient.get<Advisor[]>(
-      `/advisors?${pgSize > 0 ? `_limit=${pgSize}&_page=${pgN}` : ''}`
+      `/advisor?${pgSize > 0 ? `_limit=${pgSize}&_page=${pgN}` : ''}`
     )
   },
   getCourses(pgSize: number, pgN: number = 1): Promise<AxiosResponse<Course[]>> {
-    return apiClient.get<Course[]>(`/courses?${pgSize > 0 ? `_limit=${pgSize}&_page=${pgN}` : ''}`)
+    return apiClient.get<Course[]>(`/course?${pgSize > 0 ? `_limit=${pgSize}&_page=${pgN}` : ''}`)
   },
   getStudent(id: number): Promise<AxiosResponse<Student>> {
-    return apiClient.get<Student>(`/students/${id}`)
+    return apiClient.get<Student>(`/student/${id}`)
   },
   getAdvisor(id: number): Promise<AxiosResponse<Advisor>> {
-    return apiClient.get<Advisor>(`/advisors/${id}`)
+    return apiClient.get<Advisor>(`/advisor/${id}`)
   },
   getCourse(id: number): Promise<AxiosResponse<Course>> {
-    return apiClient.get<Course>(`/courses/${id}`)
+    return apiClient.get<Course>(`/course/${id}`)
   },
   updateStudent(id: number, student: Student): Promise<AxiosResponse<Student>> {
-    return apiClient.put<Student>(`/students/${id}`, student)
+    return apiClient.put<Student>(`/student/${id}`, student)
   },
   insertStudent(student: Student): Promise<AxiosResponse<Student>> {
-    return apiClient.post<Student>(`/students`, student)
+    return apiClient.post<Student>(`/student`, student)
   },
   insertAdvisor(advisor: Advisor): Promise<AxiosResponse<Advisor>> {
-    return apiClient.post<Advisor>(`/advisors`, advisor)
+    return apiClient.post<Advisor>(`/advisor`, advisor)
   }
 }

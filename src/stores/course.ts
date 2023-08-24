@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type { Advisor, Course } from '@/types'
+import RegistryService from '@/services/RegistryService'
 
 export const useCourseStore = defineStore('course', {
   state: () => ({
@@ -7,11 +8,9 @@ export const useCourseStore = defineStore('course', {
     lecturer: null as Advisor | null
   }),
   actions: {
-    setCourse(course: Course) {
+    async setCourse(course: Course) {
       this.course = course
-    },
-    setLecturer(lecturer: Advisor) {
-      this.lecturer = lecturer
+      this.lecturer = await RegistryService.getAdvisor(course.advisorId).then((res) => res.data)
     },
     clear() {
       this.course = null
