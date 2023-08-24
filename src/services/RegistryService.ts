@@ -30,6 +30,9 @@ export default {
   getAdvisor(id: number): Promise<AxiosResponse<Advisor>> {
     return apiClient.get<Advisor>(`/advisor/${id}`)
   },
+  getAdvisorExpanded(id: number): Promise<AxiosResponse<Advisor>> {
+    return apiClient.get<Advisor>(`/advisor/${id}?_embed=course&_embed=student`)
+  },
   getCourse(id: number): Promise<AxiosResponse<Course>> {
     return apiClient.get<Course>(`/course/${id}`)
   },
