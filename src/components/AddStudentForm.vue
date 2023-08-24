@@ -71,8 +71,11 @@ function submitForm() {
         <input type="text"
           class="md:text-xl w-full text-black bg-transparent border-b border-stone-400 focus:outline-none focus:border-stone-700 transition-colors"
           v-model="student.image" placeholder="" required />
-        <div class="w-[128px] h-[128px] border border-dashed mx-auto mt-4 border-stone-400">
-          <img class="h-full w-full object-cover" :src="student.image" />
+        <div class="flex flex-col items-center mt-4">
+          <div class="w-[128px] h-[128px] border border-dashed border-stone-400">
+            <img class="h-full w-full object-cover" :class="{ 'invisible': !student.image }" :src="student.image" />
+          </div>
+          <p class="mx-auto text-black opacity-40 text-xs">Preview</p>
         </div>
       </div>
 

@@ -48,7 +48,7 @@ function submitForm() {
           class="md:text-xl w-full text-black bg-transparent border-b border-stone-400 focus:outline-none focus:border-stone-700 transition-colors"
           v-model="advisor.image" placeholder="" required />
         <div class="w-[128px] h-[128px] border border-dashed mx-auto mt-4 border-stone-400">
-          <img class="h-full w-full object-cover" :src="advisor.image" />
+          <img class="h-full w-full object-cover" :class="{ 'invisible': !advisor.image }" :src="advisor.image" />
         </div>
       </div>
 
