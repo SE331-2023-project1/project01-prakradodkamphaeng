@@ -13,10 +13,14 @@ jobs:
       - 
         name: Prepare docker-compose run
         run: |
-              mkdir json-server
+              mkdir json-server/db
               cp docker-compose.yml json-server/docker-compose.yml
-              cp db.json json-server/db.json
+              cp db.json json-server/db/db.json
+              ls -a
               cd json-server
+              ls -a
               docker-compose -H ${{ secrets.HOST_SERVER }} -f docker-compose.yml down
               docker-compose -H ${{ secrets.HOST_SERVER }} -f docker-compose.yml pull
               docker-compose -H ${{ secrets.HOST_SERVER }} -f docker-compose.yml up -d
+              cd db
+              ls -a
