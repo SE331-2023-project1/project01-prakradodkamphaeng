@@ -14,10 +14,22 @@ const student = ref<Student>({
   image: '',
   courseId: [],
   advisorId: -1,
-  comments: []
+  comments: [],
+  nationality: '',
+  birthday: 0,
+  address: '',
 })
 const courseAfterSearch = computed(() => {
   return courses.value.filter((x) => x.course_name.toLowerCase().startsWith(searchWord.value.toLowerCase()))
+})
+const birthdayWrapper = computed({
+  get() {
+    const date = new Date(student.value.birthday)
+    return date.toISOString().split('T')[0]
+  },
+  set(newValue: string) {
+    student.value.birthday = Date.parse(newValue)
+  }
 })
 const coursesDisplay = computed(() => {
   return student.value.courseId.map((v) => courses.value.find((x) => x.id === v)).filter((x) => x !== undefined) as Course[]
@@ -38,7 +50,10 @@ function submitForm() {
       image: '',
       courseId: [],
       advisorId: -1,
-      comments: []
+      comments: [],
+      nationality: '',
+      birthday: 0,
+      address: '',
     }
     console.log(res.data)
     useMessageStore().flashMessage('Added a student successfully.')
@@ -64,6 +79,25 @@ function submitForm() {
         <input type="text"
           class="md:text-xl w-full text-black bg-transparent border-b border-stone-400 focus:outline-none focus:border-stone-700 transition-colors"
           placeholder="" v-model="student.last_name" required />
+      </div>
+      <div class="col-span-2">
+        <label class="text-xs text-stone-700">Address</label>
+        <input type="text"
+          class="md:text-xl w-full text-black bg-transparent border-b border-stone-400 focus:outline-none focus:border-stone-700 transition-colors"
+          placeholder="" v-model="student.address" required />
+      </div>
+
+      <div class="col-span-2 lg:col-span-1">
+        <label class="text-xs text-stone-700">Nationality</label>
+        <input type="text"
+          class="md:text-xl w-full h-8 text-black bg-transparent border-b border-stone-400 focus:outline-none focus:border-stone-700 transition-colors"
+          placeholder="" v-model="student.nationality" required />
+      </div>
+      <div class="col-span-2 lg:col-span-1">
+        <label class="text-xs text-stone-700">Birthday</label>
+        <input type="date"
+          class="md:text-xl w-full h-8 text-black bg-transparent border-b border-stone-400 focus:outline-none focus:border-stone-700 transition-colors"
+          placeholder="" v-model="birthdayWrapper" required />
       </div>
 
       <div class="col-span-2">
