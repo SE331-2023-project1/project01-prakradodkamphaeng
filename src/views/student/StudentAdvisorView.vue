@@ -13,7 +13,7 @@ const advisor = storeToRefs(store).advisor
       <img :src="advisor.image" class="w-32 aspect-square object-cover shadow-md" />
       <div class="flex flex-col justify-between">
         <div>
-          <h2 class="text-3xl">{{ advisor.first_name }} {{ advisor.last_name }}</h2>
+          <h2 class="text-3xl">{{ advisor.prefix ? advisor.prefix + ' ': '' }}{{ advisor.first_name }} {{ advisor.last_name }}</h2>
         </div>
         <div class="flex flex-row">
           <p class="text-md">Contact Advisor:</p>
