@@ -1,0 +1,21 @@
+name: Deploy to json server
+'on':
+  push:
+    branches:
+      - main
+jobs:
+  deploy-docker:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      - 
+        name: Prepare docker-compose run
+        run: |
+              mkdir json-server
+              cp docker-compose.yml json-server/docker-compose.yml
+              cd json-server
+              docker-compose -H ${{ secrets.HOST_SERVER }} -f docker-compose.yml down
+              docker-compose -H ${{ secrets.HOST_SERVER }} -f docker-compose.yml pull
+              docker-compose -H ${{ secrets.HOST_SERVER }} -f docker-compose.yml up -d
